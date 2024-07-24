@@ -63,4 +63,49 @@ var con = mysql.createConnection({
   user: "d0406613",
   password: "CWAGP8K9Jqf5zqGpb85b"
 });
+con.connect((err) => {
+  if (err) {
+    console.error('Error connecting: ' + err.stack);
+    return;
+  }
+  console.log('Connected as id ' + con.threadId);
+});
 
+con.on('error', (err) => {
+  console.error('Database error: ' + err);
+  if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+    handleDisconnect(); // Reconnect if the connection is lost
+  } else {
+    throw err;  // Fatal error, rethrow
+  }
+});
+
+function handleDisconnect() {
+  con = mysql.createConnection(con.config);
+  con.connect((err) => {
+    if (err) {
+      console.error('Error reconnecting: ' + err.stack);
+      setTimeout(handleDisconnect, 2000); // Try to reconnect after 2 seconds
+    }
+  });
+}
+app.get('/loadartikel', function (req, res) {
+  const query = "SELECT * FROM artikelliste";
+  con.query(query, function (error, results) {
+    if (error) throw error;
+    const artikel = results.reduce((acc, row) => {
+        acc.push({
+          a_nr: row.a_nr,
+          r_nr: row.r_nr,
+          artikel: row.artikel,
+          kategorie: row.kategorie,
+          anzahl: row.anzahl,
+          gebinde: row.gebinde,
+        });
+      return acc;
+    }, []);
+    res.json(artikel);
+    console.log(artikel)
+}
+);
+  });

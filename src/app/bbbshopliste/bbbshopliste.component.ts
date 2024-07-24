@@ -3,6 +3,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatListModule} from '@angular/material/list';
+import { ArtikelService } from '../providers/artikel.service';
 @Component({
   selector: 'app-bbbshopliste',
   standalone: true,
@@ -12,8 +13,19 @@ import {MatListModule} from '@angular/material/list';
 })
 export class BbbshoplisteComponent {
   title = 'WarenkorbSystem';
+
+  public artikel: any = {};
+
   displayedColumns: string[] = ['artikel_position', 'artikel_name', 'artikel_kategorie', 'artikel_anzahl', 'artikel_gebinde'];
   dataSource = ELEMENT_DATA;
+  constructor(private ArtikelService:ArtikelService){}
+  ngOnInit(): void {
+    this.ArtikelService.getartikel().subscribe(data => {
+      this.artikel = this.ArtikelService.artikel;
+      console.log(this.artikel)
+    });
+    
+  }
 }
 export interface PeriodicElement {
   artikel_position: number;
