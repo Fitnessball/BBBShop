@@ -5,17 +5,7 @@
   "projects": {
     "BBBShop": {
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "standalone": false
-        },
-        "@schematics/angular:directive": {
-          "standalone": false
-        },
-        "@schematics/angular:pipe": {
-          "standalone": false
-        }
-      },
+      "schematics": {},
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -23,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/bbbshop",
+            "outputPath": "dist/BBBShop",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -35,14 +25,10 @@
               "src/assets"
             ],
             "styles": [
+              "src/custom-theme.scss",
               "src/styles.css"
             ],
-            "scripts": [],
-            "server": "src/main.server.ts",
-            "prerender": true,
-            "ssr": {
-              "entry": "server.ts"
-            }
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -108,6 +94,6 @@
     }
   },
   "cli": {
-    "analytics": "b6c19867-7b43-42b4-9720-524bbb6206e7"
+    "analytics": "33610c7f-c0e9-4d0f-86e3-cbcc13fa75c8"
   }
 }

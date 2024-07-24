@@ -1,0 +1,179 @@
+
+/* Add FontAwesome CDN for social media icons */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
+
+header {
+    padding: 10px 0px;
+    background-color: black; /*background color*/
+    color: white; /*text color*/
+    display: flex; /*start flexbox*/
+    justify-content: space-evenly; /* abstand container lins und rechts*/
+    align-items: center; /* Center content vertikal*/
+}
+
+/* Begin Navbar */
+
+.dropdown {
+    float: left;
+    overflow: hidden;
+  }
+
+  .dropdown .dropbtn {
+    color: white; /*text color*/
+    text-decoration: none; /*untere linie entfernen*/
+    font-size: 23px;
+    transition: font-size 0.3s; /*Smooth transition in sekunden*/
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  .navbar a:hover, .dropdown:hover .dropbtn {
+    font-size: 28px;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: black;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+
+  .dropdown-content a {
+    float: none;
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+
+  .dropdown-content a:hover {
+    background-color: black;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+/* Begin Containers */
+.container-right {
+    width: 75%;
+    display: flex; /*start flex*/
+    justify-content: space-evenly;
+    align-items: center; /* Center content vertically */
+}
+.container-left{
+    width: 25%;
+    display: flex; /*start flex*/
+    justify-content: center;
+    align-items: center; /* Center content vertically */
+}
+
+.logo {
+  max-width: 30%;
+  height: auto;
+}
+
+a {/*flex Items*/
+    color: white; /*text color*/
+    text-decoration: none; /*untere linie entfernen*/
+    font-size: 23px;
+    transition: font-size 0.3s; /*Smooth transition in sekunden*/
+}
+
+a:hover {/*hover effekt flex Items*/
+    font-size: 28px;
+}
+
+
+
+hr {/*Trennlinie*/
+    border: 0;
+    border-top: 1px solid white;
+    width: 70%; /* Adjust the width as needed */
+    margin-right: 0px;
+}
+
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 50px;
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 150px;
+}
+
+.footer-column img {
+  max-width: 30%;
+  height: auto;
+  display: block;
+}
+
+.footer-column h2, .footer-column h3 {
+    margin-top: 0;
+    font-size: 1.2em;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-column ul li {
+    margin: 10px 0;
+}
+
+.footer-column ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    transition: none;
+}
+
+.footer-column ul li a:hover {
+    text-decoration: underline;
+}
+
+.social-media {
+    display: flex;
+    gap: 10px;
+}
+
+.social-media li {
+    list-style: none;
+}
+
+.social-media li a {
+    color: #fff;
+    font-size: 1.5em;
+    text-decoration: none;
+}
+
+.footer-bottom {
+    background-color: #333;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+}
+
+.footer-bottom p {
+    margin: 0;
+    font-size: 0.9em;
+}
+

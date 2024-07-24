@@ -1,0 +1,73 @@
+<div class="main-container">
+    <div class="left-container">
+      <div class="tag-container">
+        <mat-card>
+          <mat-card-content>
+            <mat-chip-set aria-label="Fish selection">
+              <mat-chip>Kat 1</mat-chip>
+              <mat-chip>Kat 2</mat-chip>
+              <mat-chip>Kat 3</mat-chip>
+              <mat-chip>Kat 4</mat-chip>
+            </mat-chip-set>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+    <div class="middle-container">
+      <table mat-table [dataSource]="dataSource" class="main-table">
+        <!-- Position Column -->
+        <ng-container matColumnDef="artikel_position">
+          <th mat-header-cell *matHeaderCellDef> Nr. </th>
+          <td mat-cell *matCellDef="let element"> {{element.artikel_position}} </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="artikel_name">
+          <th mat-header-cell *matHeaderCellDef> Artikel </th>
+          <td mat-cell *matCellDef="let element"> {{element.artikel_name}} </td>
+        </ng-container>
+      
+        <!-- Kategorie Column -->
+        <ng-container matColumnDef="artikel_kategorie">
+          <th mat-header-cell *matHeaderCellDef> Kategorie </th>
+          <td mat-cell *matCellDef="let element"> {{element.artikel_kategorie}} </td>
+        </ng-container>
+      
+        <!-- Anzahl Column -->
+        <ng-container matColumnDef="artikel_anzahl">
+          <th mat-header-cell *matHeaderCellDef> Anzahl </th>
+          <td mat-cell *matCellDef="let element"> {{element.artikel_anzahl}} </td>
+        </ng-container>
+          
+        <!-- Gebinde Column -->
+        <ng-container matColumnDef="artikel_gebinde">
+          <th mat-header-cell *matHeaderCellDef> Gebinde </th>
+          <td mat-cell *matCellDef="let element"> {{element.artikel_gebinde}} </td>
+        </ng-container>
+        
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+      
+    <div class="right-container">
+      
+      <div class="list-container">
+        <h3>Kategorie</h3>
+        <mat-list>
+          <mat-list-item>
+            <span matListItemTitle>Arktikel 1</span>
+            <span matListItemLine>Anzahl</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span matListItemTitle>Arktikel 2</span>
+            <span matListItemLine>Anzahl</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span matListItemTitle>Arktikel 3</span>
+            <span matListItemLine>Anzahl</span>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+  </div>
