@@ -48,11 +48,25 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
+
+      <!-- <section>
+        <div class="example-button-row">
+          <button mat-flat-button (click)="addNewRow()">Artikel erstellen</button>
+        </div>
+      </section> -->
+      <!-- <form>
+        <mat-form-field>
+          <mat-label>Favorite food</mat-label>
+          <mat-select [(ngModel)]="selectedValue" name="food">
+            @for (food of foods; track food) {
+              <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </form> -->
     </div>
-    
       
     <div class="right-container">
-      
       <div class="list-container">
         <h3>Kategorie</h3>
         <mat-list>
