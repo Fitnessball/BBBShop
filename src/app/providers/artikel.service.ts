@@ -9,6 +9,10 @@ export class ArtikelService {
   artikel: Array<any> = [];
   constructor(private http: HttpClient) { }
 
+  public setcounter(index:number,anzahl:number): Observable<any> {
+     return this.http.post<any>('http://127.0.0.1:8080/setcounter', {index,anzahl});
+   }
+
   public getartikel(): Observable<any> {
     return new Observable(observer => {
       this.http.get('http://127.0.0.1:8080/loadartikel').subscribe((data: any) => {

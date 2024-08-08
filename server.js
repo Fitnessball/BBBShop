@@ -150,3 +150,17 @@ app.get('/loadartikel', async function (req, res) {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+app.post('/setcounter', function (req, res) {
+    const sql = "UPDATE artikelliste SET anzahl = ? WHERE a_nr = ?;";
+    const { anzahl, index } = req.body;
+
+    pool.query(sql, [anzahl, index], function (err, result) {
+        if (err) {
+            console.error(err);
+            res.status(500).send({ error: 'Database query failed' });
+            return;
+        }
+        res.status(200).send({ message: 'Records updated' });
+    });
+});

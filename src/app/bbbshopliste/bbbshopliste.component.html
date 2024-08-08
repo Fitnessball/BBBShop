@@ -1,69 +1,72 @@
 <div class="main-container">
     <div class="left-container">
       <div class="tag-container">
-        <mat-card>
-          <mat-card-content>
-            <mat-chip-set aria-label="Fish selection">
-              <mat-chip>Kat 1</mat-chip>
-              <mat-chip>Kat 2</mat-chip>
-              <mat-chip>Kat 3</mat-chip>
-              <mat-chip>Kat 4</mat-chip>
-            </mat-chip-set>
-          </mat-card-content>
-        </mat-card>
+        <mat-chip-listbox class="mat-mdc-chip-set-stacked" aria-label="Cutest dog breeds" multiple>
+          @for (dog of bestBoys; track dog) {
+            <mat-chip-option>{{dog}}</mat-chip-option>
+          }
+        </mat-chip-listbox>
       </div>
+     
+        <section>
+        <div class="example-button-row">
+          <button mat-flat-button>Artikel erstellen</button>
+        </div>
+      </section> 
+
     </div>
     <div class="middle-container">
-      <table mat-table [dataSource]="artikel" class="main-table">
-        <!-- Position Column -->
-        <ng-container matColumnDef="a_nr">
-          <th mat-header-cell *matHeaderCellDef> Nr. </th>
-          <td mat-cell *matCellDef="let element"> {{element.a_nr}} </td>
-        </ng-container>
-        
-        <!-- Name Column -->
-        <ng-container matColumnDef="artikel">
-          <th mat-header-cell *matHeaderCellDef> Artikel </th>
-          <td mat-cell *matCellDef="let element"> {{element.artikel}} </td>
-        </ng-container>
-        
-        <!-- Kategorie Column -->
-        <ng-container matColumnDef="kategorie">
-          <th mat-header-cell *matHeaderCellDef> Kategorie </th>
-          <td mat-cell *matCellDef="let element"> {{element.kategorie}} </td>
-        </ng-container>
-        
-        <!-- Anzahl Column -->
-        <ng-container matColumnDef="anzahl">
-          <th mat-header-cell *matHeaderCellDef> Anzahl </th>
-          <td mat-cell *matCellDef="let element"> {{element.anzahl}} </td>
-        </ng-container>
-          
-        <!-- Gebinde Column -->
-        <ng-container matColumnDef="gebinde">
-          <th mat-header-cell *matHeaderCellDef> Gebinde </th>
-          <td mat-cell *matCellDef="let element"> {{element.gebinde}} </td>
-        </ng-container>
-        
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
 
-      <!-- <section>
-        <div class="example-button-row">
-          <button mat-flat-button (click)="addNewRow()">Artikel erstellen</button>
-        </div>
-      </section> -->
-      <!-- <form>
-        <mat-form-field>
-          <mat-label>Favorite food</mat-label>
-          <mat-select [(ngModel)]="selectedValue" name="food">
-            @for (food of foods; track food) {
-              <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-      </form> -->
+      <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+      </mat-form-field>
+      
+
+        <table class="main-table" mat-table [dataSource]="dataSource" matSort>
+      
+          <!-- ID Column -->
+          <ng-container matColumnDef="a_nr">
+            <th mat-header-cell *matHeaderCellDef> Nr. </th>
+            <td mat-cell *matCellDef="let element"> {{element.a_nr}} </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="artikel">
+            <th mat-header-cell *matHeaderCellDef> Artikel </th>
+            <td mat-cell *matCellDef="let element"> {{element.artikel}} </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="kategorie">
+            <th mat-header-cell *matHeaderCellDef> Kategorie </th>
+            <td mat-cell *matCellDef="let element"> {{element.kategorie}} </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="anzahl">
+            <th mat-header-cell *matHeaderCellDef> Anzahl </th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field appearance="outline" class="number-container"  >
+                <input matInput type="number" [(ngModel)]="element.anzahl" (ngModelChange)="onAnzahlChange(element)">
+              </mat-form-field>
+            </td>
+          </ng-container>
+            
+          <ng-container matColumnDef="gebinde">
+            <th mat-header-cell *matHeaderCellDef> Gebinde </th>
+            <td mat-cell *matCellDef="let element"> {{element.gebinde}} </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      
+          <!-- Row shown when there is no matching data. -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+          </tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+
+
+    
     </div>
       
     <div class="right-container">
