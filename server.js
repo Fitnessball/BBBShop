@@ -151,6 +151,23 @@ app.get('/loadartikel', async function (req, res) {
     }
 });
 
+app.get('/loadkategorien', async function (req, res) {
+    const query = "SELECT * FROM kategorien ORDER BY k_name";
+    try {
+        const results = await executeQueryWithRetry(query);
+        const kategorie = results.map(row => ({
+            k_id: row.k_id,
+            k_name: row.k_name
+        }));
+        res.json(kategorie);
+        console.log(kategorie);
+    } catch (error) {
+        console.error('Query error: ' + error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
 app.post('/setcounter', function (req, res) {
     const sql = "UPDATE artikelliste SET anzahl = ? WHERE a_nr = ?;";
     const { anzahl, index } = req.body;
@@ -164,3 +181,4 @@ app.post('/setcounter', function (req, res) {
         res.status(200).send({ message: 'Records updated' });
     });
 });
+

@@ -1,13 +1,12 @@
 <div class="main-container">
     <div class="left-container">
       <div class="tag-container">
-        <mat-chip-listbox class="mat-mdc-chip-set-stacked" aria-label="Cutest dog breeds" multiple>
-          @for (dog of bestBoys; track dog) {
-            <mat-chip-option>{{dog}}</mat-chip-option>
+        <mat-chip-listbox class="mat-mdc-chip-set-stacked" aria-label="Kategoriefilter" multiple>
+          @for (tag of kategorie; track tag) {
+            <mat-chip-option>{{tag.k_name}}</mat-chip-option>
           }
         </mat-chip-listbox>
       </div>
-     
         <section>
         <div class="example-button-row">
           <button mat-flat-button>Artikel erstellen</button>

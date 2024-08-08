@@ -32,8 +32,8 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
   styleUrls: ['./bbbshopliste.component.css']
 })
 export class BbbshoplisteComponent implements AfterViewInit, OnInit {
-  readonly bestBoys: string[] = ['Samoyed', 'Akita Inu', 'Alaskan Malamute', 'Siberian Husky'];
   public artikel: any[] = [];
+  public kategorie: any[] = [];
   selectedValue = '';
   dataSource = new MatTableDataSource<any>();
 
@@ -46,13 +46,16 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void {
     this.artikelService.getartikel().subscribe(data => {
-      // Enumerate a_nr values
       this.artikel = data.map((item: any, index: number) => ({
         ...item,
         liste_index: index + 1
       }));
       this.dataSource.data = this.artikel;
     });
+    this.artikelService.getkategorie().subscribe(data => {
+      this.kategorie = data;
+    });
+    
   }
 
   ngAfterViewInit() {

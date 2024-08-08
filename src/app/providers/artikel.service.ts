@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ArtikelService {
   artikel: Array<any> = [];
+  kategorie: Array<any> = [];
   constructor(private http: HttpClient) { }
 
   public setcounter(index:number,anzahl:number): Observable<any> {
@@ -26,4 +27,19 @@ export class ArtikelService {
       });
     });
   }
+
+  public getkategorie(): Observable<any> {
+    return new Observable(observer => {
+      this.http.get('http://127.0.0.1:8080/loadkategorien').subscribe((data: any) => {
+        this.kategorie = data;
+        console.log(this.kategorie)
+        observer.next(data);
+        observer.complete();
+      }, err => {
+        observer.error(err);
+        observer.complete();
+      });
+    });
+  }
+
 }
