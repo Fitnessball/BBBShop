@@ -1,5 +1,6 @@
 <div class="main-container">
     <div class="left-container">
+      <h3 class="heading_L_R">Tag Filter</h3>
       <div class="tag-container">
         <mat-chip-listbox class="mat-mdc-chip-set-stacked" aria-label="Kategoriefilter" multiple>
           @for (tag of kategorie; track tag) {
@@ -15,7 +16,7 @@
 
     </div>
     <div class="middle-container">
-
+      <h1 class="shop_heading">BBB Shop Tabakquartier</h1>
       <mat-form-field>
         <mat-label>Filter</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
@@ -25,9 +26,9 @@
         <table class="main-table" mat-table [dataSource]="dataSource" matSort>
       
           <!-- ID Column -->
-          <ng-container matColumnDef="a_nr">
+          <ng-container matColumnDef="liste_index">
             <th mat-header-cell *matHeaderCellDef> Nr. </th>
-            <td mat-cell *matCellDef="let element"> {{element.a_nr}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.liste_index}} </td>
           </ng-container>
           
           <ng-container matColumnDef="artikel">
@@ -70,7 +71,7 @@
       
     <div class="right-container">
       <div class="list-container">
-        <h3>Kategorie</h3>
+        <h3 class="heading_L_R">Warenkrob</h3>
         <mat-list>
           <mat-list-item>
             <span matListItemTitle>Arktikel 1</span>
