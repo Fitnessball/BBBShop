@@ -4,7 +4,7 @@
       <div class="tag-container">
         <mat-chip-listbox class="mat-mdc-chip-set-stacked" aria-label="Kategoriefilter" multiple>
           @for (tag of kategorie; track tag) {
-            <mat-chip-option>{{tag.k_name}}</mat-chip-option>
+            <mat-chip-option (onclick)="onChipClick(tag)">{{tag.k_name}}</mat-chip-option>
           }
         </mat-chip-listbox>
       </div>
@@ -18,56 +18,55 @@
     <div class="middle-container">
       <h1 class="shop_heading">BBB Shop Tabakquartier</h1>
       <mat-form-field>
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+          <mat-label>Filter</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="suche" #input>
       </mat-form-field>
-      
-
-        <table class="main-table" mat-table [dataSource]="dataSource" matSort>
-      
-          <!-- ID Column -->
-          <ng-container matColumnDef="liste_index">
-            <th mat-header-cell *matHeaderCellDef> Nr. </th>
-            <td mat-cell *matCellDef="let element"> {{element.liste_index}} </td>
-          </ng-container>
-          
-          <ng-container matColumnDef="artikel">
-            <th mat-header-cell *matHeaderCellDef> Artikel </th>
-            <td mat-cell *matCellDef="let element"> {{element.artikel}} </td>
-          </ng-container>
-          
-          <ng-container matColumnDef="kategorie">
-            <th mat-header-cell *matHeaderCellDef> Kategorie </th>
-            <td mat-cell *matCellDef="let element"> {{element.kategorie}} </td>
-          </ng-container>
-          
-          <ng-container matColumnDef="anzahl">
-            <th mat-header-cell *matHeaderCellDef> Anzahl </th>
-            <td mat-cell *matCellDef="let element">
-              <mat-form-field appearance="outline" class="number-container"  >
-                <input matInput type="number" [(ngModel)]="element.anzahl" (ngModelChange)="onAnzahlChange(element)">
-              </mat-form-field>
-            </td>
-          </ng-container>
-            
-          <ng-container matColumnDef="gebinde">
-            <th mat-header-cell *matHeaderCellDef> Gebinde </th>
-            <td mat-cell *matCellDef="let element"> {{element.gebinde}} </td>
-          </ng-container>
-      
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      
-          <!-- Row shown when there is no matching data. -->
-          <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-          </tr>
-        </table>
-        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
-
-
     
-    </div>
+      <div class="main-table-container">
+          <table class="main-table" mat-table [dataSource]="dataSource" matSort>
+              <!-- ID Column -->
+              <ng-container matColumnDef="liste_index">
+                  <th mat-header-cell *matHeaderCellDef> Nr. </th>
+                  <td mat-cell *matCellDef="let element"> {{element.liste_index}} </td>
+              </ng-container>
+              
+              <ng-container matColumnDef="artikel">
+                  <th mat-header-cell *matHeaderCellDef> Artikel </th>
+                  <td mat-cell *matCellDef="let element"> {{element.artikel}} </td>
+              </ng-container>
+              
+              <ng-container matColumnDef="kategorie">
+                  <th mat-header-cell *matHeaderCellDef> Kategorie </th>
+                  <td mat-cell *matCellDef="let element"> {{element.kategorie}} </td>
+              </ng-container>
+              
+              <ng-container matColumnDef="anzahl">
+                  <th mat-header-cell *matHeaderCellDef> Anzahl </th>
+                  <td mat-cell *matCellDef="let element">
+                      <mat-form-field appearance="outline" class="number-container">
+                          <input matInput type="number" [(ngModel)]="element.anzahl" (ngModelChange)="onAnzahlChange(element)">
+                      </mat-form-field>
+                  </td>
+              </ng-container>
+                
+              <ng-container matColumnDef="gebinde">
+                  <th mat-header-cell *matHeaderCellDef> Gebinde </th>
+                  <td mat-cell *matCellDef="let element"> {{element.gebinde}} </td>
+              </ng-container>
+          
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          
+              <!-- Row shown when there is no matching data. -->
+              <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+              </tr>
+          </table>
+      </div>
+  
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>
+  
       
     <div class="right-container">
       <div class="list-container">

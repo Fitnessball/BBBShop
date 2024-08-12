@@ -37,7 +37,7 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
   selectedValue = '';
   dataSource = new MatTableDataSource<any>();
 
-  displayedColumns: string[] = ['a_nr', 'artikel', 'kategorie', 'anzahl', 'gebinde'];
+  displayedColumns: string[] = ['liste_index', 'artikel', 'kategorie', 'anzahl', 'gebinde'];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -51,6 +51,7 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
         liste_index: index + 1
       }));
       this.dataSource.data = this.artikel;
+      console.log(this.dataSource.data)
     });
     this.artikelService.getkategorie().subscribe(data => {
       this.kategorie = data;
@@ -82,5 +83,10 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
       }
     });
   }
+  onChipClick(tag: any): void {
+    // Handle the click event
+    console.log('Clicked chip:', tag.k_name);
 
+    // You can perform any action here, like toggling a selection, filtering data, etc.
+  }
 }
