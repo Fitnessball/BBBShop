@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
-import { MatChipsModule } from '@angular/material/chips';
+import { MatChipSelectionChange, MatChipsModule } from '@angular/material/chips';
 import { MatListModule } from '@angular/material/list';
 import { ArtikelService } from '../providers/artikel.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -36,6 +36,7 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
   public kategorie: any[] = [];
   selectedValue = '';
   dataSource = new MatTableDataSource<any>();
+  selectedCategories: string[] = []; // Array to track selected categories
 
   displayedColumns: string[] = ['liste_index', 'artikel', 'kategorie', 'anzahl', 'gebinde'];
 
@@ -56,7 +57,6 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
     this.artikelService.getkategorie().subscribe(data => {
       this.kategorie = data;
     });
-    
   }
 
   ngAfterViewInit() {
@@ -71,8 +71,10 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
   onAnzahlChange(element: any) {
-    if(element.anzahl === null){element.anzahl = 0}
+    if (element.anzahl < 0) { element.anzahl = 0 }
+    if (element.anzahl === null) { element.anzahl = 0 }
     console.log('Anzahl changed:', element);
     this.artikelService.setcounter(element.a_nr, element.anzahl).subscribe({
       next: (response) => {
@@ -83,10 +85,33 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
       }
     });
   }
-  onChipClick(tag: any): void {
-    // Handle the click event
-    console.log('Clicked chip:', tag.k_name);
 
-    // You can perform any action here, like toggling a selection, filtering data, etc.
+  onChipSelectionChange(event: MatChipSelectionChange, tag: any): void {
+    if (event.selected) {
+      // Add the selected category to the array
+      this.selectedCategories.push(tag.k_name);
+    } else {
+      // Remove the unselected category from the array
+      this.selectedCategories = this.selectedCategories.filter(cat => cat !== tag.k_name);
+    }
+
+    this.filterData();
+  }
+
+  filterData(): void {
+    if (this.selectedCategories.length > 0) {
+      // Filter the dataSource based on selected categories
+      this.dataSource.data = this.artikel.filter(artikel => 
+        this.selectedCategories.includes(artikel.kategorie)
+      );
+    } else {
+      // If no categories are selected, show all data
+      this.dataSource.data = this.artikel;
+    }
+
+    // Reset the paginator after filtering
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

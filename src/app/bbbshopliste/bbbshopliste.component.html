@@ -3,10 +3,13 @@
       <h3 class="heading_L_R">Tag Filter</h3>
       <div class="tag-container">
         <mat-chip-listbox class="mat-mdc-chip-set-stacked" aria-label="Kategoriefilter" multiple>
-          @for (tag of kategorie; track tag) {
-            <mat-chip-option (onclick)="onChipClick(tag)">{{tag.k_name}}</mat-chip-option>
-          }
-        </mat-chip-listbox>
+        @for (tag of kategorie; track tag) {
+          <mat-chip-option (selectionChange)="onChipSelectionChange($event, tag)">
+            {{tag.k_name}}
+          </mat-chip-option>
+        }
+      </mat-chip-listbox>
+      
       </div>
         <section>
         <div class="example-button-row">
@@ -64,7 +67,7 @@
           </table>
       </div>
   
-      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select pages"></mat-paginator>
   </div>
   
       
