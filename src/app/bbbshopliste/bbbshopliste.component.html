@@ -13,11 +13,16 @@
       </div>
         <section>
         <div class="example-button-row">
-          <button mat-flat-button>Artikel erstellen</button>
+          <button  mat-raised-button (click)="openBottomSheet()">Artikel erstellen</button>
         </div>
       </section> 
-
+      <!-- <mat-form-field class="example-full-width">
+        <mat-label>Leave a comment</mat-label>
+        <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+      </mat-form-field> -->
     </div>
+
+
     <div class="middle-container">
       <h1 class="shop_heading">BBB Shop Tabakquartier</h1>
       <mat-form-field>
@@ -47,7 +52,7 @@
                   <th mat-header-cell *matHeaderCellDef> Anzahl </th>
                   <td mat-cell *matCellDef="let element">
                       <mat-form-field appearance="outline" class="number-container">
-                          <input matInput type="number" [(ngModel)]="element.anzahl" (ngModelChange)="onAnzahlChange(element)">
+                          <input matInput type="number" [(ngModel)]="element.anzahl" min="0" (ngModelChange)="onAnzahlChange(element)">
                       </mat-form-field>
                   </td>
               </ng-container>
@@ -76,8 +81,8 @@
         <h3 class="heading_L_R">Warenkrob</h3>
         <mat-list>
           <mat-list-item>
-            <span matListItemTitle>Arktikel 1</span>
-            <span matListItemLine>Anzahl</span>
+            <span matListItemTitle>Buero Drucker-Patrone magenta</span>
+            <span matListItemLine>3x</span>
           </mat-list-item>
           <mat-list-item>
             <span matListItemTitle>Arktikel 2</span>

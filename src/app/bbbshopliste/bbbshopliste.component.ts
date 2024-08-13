@@ -6,11 +6,13 @@ import { MatListModule } from '@angular/material/list';
 import { ArtikelService } from '../providers/artikel.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { ArtikelBottomsheetComponent } from '../bottomsheet/bottomsheet.component';
 
 @Component({
   selector: 'app-bbbshopliste',
@@ -26,7 +28,9 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatBottomSheetModule
   ],
   templateUrl: './bbbshopliste.component.html',
   styleUrls: ['./bbbshopliste.component.css']
@@ -43,7 +47,7 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private artikelService: ArtikelService) {}
+  constructor(private artikelService: ArtikelService, private _bottomSheet: MatBottomSheet) {}
 
   ngOnInit(): void {
     this.artikelService.getartikel().subscribe(data => {
@@ -58,7 +62,9 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
       this.kategorie = data;
     });
   }
-
+  openBottomSheet(): void {
+    this._bottomSheet.open(ArtikelBottomsheetComponent);
+  }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -115,3 +121,4 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
     }
   }
 }
+
