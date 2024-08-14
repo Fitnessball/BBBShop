@@ -1,39 +1,43 @@
-<button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
-    {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
-  </button>
-  <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+<mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
     <mat-step [stepControl]="firstFormGroup">
       <form [formGroup]="firstFormGroup">
-        <ng-template matStepLabel>Fill out your name</ng-template>
+        <ng-template matStepLabel>Name des Artikels</ng-template>
         <mat-form-field>
-          <mat-label>Name</mat-label>
-          <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+          <mat-label>Artikel Name</mat-label>
+          <input matInput placeholder="Artikel" formControlName="firstCtrl" required>
         </mat-form-field>
         <div>
-          <button mat-button matStepperNext>Next</button>
+          <button mat-button matStepperNext>Weiter</button>
         </div>
       </form>
     </mat-step>
+    
     <mat-step [stepControl]="secondFormGroup">
-      <form [formGroup]="secondFormGroup">
-        <ng-template matStepLabel>Fill out your address</ng-template>
-        <mat-form-field>
-          <mat-label>Address</mat-label>
-          <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                 required>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
-    </mat-step>
+        <form [formGroup]="secondFormGroup">
+          <ng-template matStepLabel>Kategorie des Artikels</ng-template>
+          <mat-form-field >
+            <mat-label>Kategorie</mat-label>
+            <mat-select formControlName="category">
+                <mat-option *ngFor="let tag of kategorie | async" [value]="tag.k_id">
+                {{tag.k_name}}
+              </mat-option>
+            </mat-select>
+              
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Zurück</button>
+            <button mat-button matStepperNext>Weiter</button>
+          </div>
+        </form>
+      </mat-step>
+      
+    
     <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      <p>You are now done.</p>
+      <ng-template matStepLabel>Fertig</ng-template>
+      <p>Placeholder</p>
       <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
+        <button mat-button matStepperPrevious>Zurück</button>
+        <button mat-button (click)="stepper.reset()">Artikel hinzufügen</button>
       </div>
     </mat-step>
   </mat-stepper>
