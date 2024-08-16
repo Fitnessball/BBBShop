@@ -1,4 +1,4 @@
-<mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+<mat-stepper #stepper >
     <mat-step [stepControl]="firstFormGroup">
       <form [formGroup]="firstFormGroup">
         <ng-template matStepLabel>Name des Artikels</ng-template>
@@ -15,14 +15,19 @@
     <mat-step [stepControl]="secondFormGroup">
         <form [formGroup]="secondFormGroup">
           <ng-template matStepLabel>Kategorie des Artikels</ng-template>
-          <mat-form-field >
-            <mat-label>Kategorie</mat-label>
-            <mat-select formControlName="category">
-                <mat-option *ngFor="let tag of kategorie" [value]="tag.k_id">
-                {{tag.k_name}}
-              </mat-option>
-            </mat-select>
-              
+          <mat-form-field class="example-full-width">
+            <mat-label>Number</mat-label>
+            <input type="text"
+                   placeholder="Pick one"
+                   aria-label="Number"
+                   matInput
+                   [formControl]="myControl"
+                   [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              @for (option of kategorie; track option) {
+                <mat-option [value]="option.k_name">{{option.k_name}}</mat-option>
+              }
+            </mat-autocomplete>
           </mat-form-field>
           <div>
             <button mat-button matStepperPrevious>Zurück</button>
