@@ -1,6 +1,6 @@
 <div class="main-container">
     <div class="left-container">
-      <h3 class="heading_L_R">Tag Filter</h3>
+      <h3 class="heading_L_R">Kategorie Filter</h3>
       <div class="tag-container">
         <mat-chip-listbox class="mat-mdc-chip-set-stacked" aria-label="Kategoriefilter" multiple>
         @for (tag of kategorie; track tag) {
@@ -75,23 +75,20 @@
   </div>
   
       
-    <div class="right-container">
-      <div class="list-container">
-        <h3 class="heading_L_R">Warenkrob</h3>
-        <mat-list>
-          <mat-list-item>
-            <span matListItemTitle>Buero Drucker-Patrone magenta</span>
-            <span matListItemLine>3x</span>
-          </mat-list-item>
-          <mat-list-item>
-            <span matListItemTitle>Arktikel 2</span>
-            <span matListItemLine>Anzahl</span>
-          </mat-list-item>
-          <mat-list-item>
-            <span matListItemTitle>Arktikel 3</span>
-            <span matListItemLine>Anzahl</span>
-          </mat-list-item>
-        </mat-list>
-      </div>
+  <div class="right-container">
+    <div class="list-container">
+      <h3 class="heading_L_R">Warenkorb</h3>
+      <mat-list>
+  @for (item of warenkorb; track item) {
+
+        <mat-list-item>
+          <span matListItemTitle>{{ item.artikel }}</span>
+          <span matListItemLine>{{ item.anzahl }}x</span>
+        </mat-list-item>
+  }
+      </mat-list>
+      
     </div>
+  </div>
+  
   </div>

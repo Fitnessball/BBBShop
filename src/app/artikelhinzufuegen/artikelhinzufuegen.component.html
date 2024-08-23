@@ -1,10 +1,17 @@
 <mat-stepper #stepper >
-    <mat-step [stepControl]="firstFormGroup">
+    <!-- errorMessage="Name is required." -->
+    <mat-step [stepControl]="firstFormGroup" >
       <form [formGroup]="firstFormGroup">
         <ng-template matStepLabel>Name des Artikels</ng-template>
         <mat-form-field>
           <mat-label>Artikel</mat-label>
           <input matInput placeholder="Artikel" formControlName="firstCtrl" required>
+          <mat-error *ngIf="firstFormGroup.get('firstCtrl').hasError('required')">
+            Dieses Feld ist erforderlich.
+          </mat-error>
+          <mat-error *ngIf="firstFormGroup.get('firstCtrl').hasError('pattern')">
+            Nur Buchstaben sind erlaubt.
+          </mat-error>
         </mat-form-field>
         <div>
           <button mat-button matStepperNext>Weiter</button>
@@ -16,13 +23,15 @@
         <form [formGroup]="secondFormGroup">
           <ng-template matStepLabel>Kategorie des Artikels</ng-template>
           <mat-form-field class="example-full-width">
-            <mat-label>Number</mat-label>
+            <mat-label>Kategorie</mat-label>
             <input type="text"
-                   placeholder="Pick one"
-                   aria-label="Number"
-                   matInput
-                   [formControl]="myControl"
-                   [matAutocomplete]="auto">
+            placeholder="Wähle aus"
+            aria-label="Kategorie"
+            matInput
+            formControlName="myControl"
+            [matAutocomplete]="auto"
+            required>
+     
             <mat-autocomplete #auto="matAutocomplete">
               @for (option of kategorie; track option) {
                 <mat-option [value]="option.k_name">{{option.k_name}}</mat-option>
@@ -35,7 +44,7 @@
           </div>
         </form>
       </mat-step>
-      
+
       <mat-step [stepControl]="thirdFormGroup">
         <form [formGroup]="thirdFormGroup">
           <ng-template matStepLabel>Gebinde des Artikels</ng-template>
@@ -44,9 +53,8 @@
             <input matInput placeholder="Gebinde" formControlName="thirdCtrl" required>
           </mat-form-field>
           <div>
-            <button mat-button >Artikel hinzufügen</button>
+            <button mat-button (click)="addArtikel()">Artikel hinzufügen</button>
           </div>
         </form>
       </mat-step>
   </mat-stepper>
-  
