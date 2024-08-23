@@ -8,20 +8,14 @@
             {{tag.k_name}}
           </mat-chip-option>
         }
-      </mat-chip-listbox>
-      
+      </mat-chip-listbox>      
       </div>
         <section>
         <div class="example-button-row">
           <button  mat-raised-button (click)="openArtikel()">Artikel erstellen</button>
         </div>
-      </section> 
-      <!-- <mat-form-field class="example-full-width">
-        <mat-label>Leave a comment</mat-label>
-        <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
-      </mat-form-field> -->
+      </section>
     </div>
-
 
     <div class="middle-container">
       <h1 class="shop_heading">BBB Shop Tabakquartier</h1>
@@ -52,43 +46,59 @@
                 <th mat-header-cell *matHeaderCellDef> Gebinde </th>
                 <td mat-cell *matCellDef="let element"> {{element.gebinde}} </td>
             </ng-container>
-              
-              <ng-container matColumnDef="anzahl">
-                  <th mat-header-cell *matHeaderCellDef> Anzahl </th>
-                  <td mat-cell *matCellDef="let element">
-                      <mat-form-field appearance="outline" class="number-container">
-                          <input matInput type="number" [(ngModel)]="element.anzahl" min="0" (ngModelChange)="onAnzahlChange(element)">
-                      </mat-form-field>
-                  </td>
-              </ng-container>
+            <ng-container matColumnDef="anzahl">
+              <th mat-header-cell *matHeaderCellDef> Anzahl </th>
+              <td mat-cell *matCellDef="let element">
+                <mat-form-field appearance="outline" class="number-container">
+                  <div class="increment-decrement-container">
+                    <!-- Minus Button -->
+                    <button mat-icon-button (click)="element.anzahl = element.anzahl > 0 ? element.anzahl - 1 : 0; onAnzahlChange(element)">
+                      <mat-icon>remove</mat-icon>
+                    </button>
+            
+                    <!-- Number Input -->
+                    <input matInput type="number" [(ngModel)]="element.anzahl" min="0" (ngModelChange)="onAnzahlChange(element)">
+            
+                    <!-- Plus Button -->
+                    <button mat-icon-button (click)="element.anzahl = element.anzahl + 1; onAnzahlChange(element)">
+                      <mat-icon>add</mat-icon>
+                    </button>
+                  </div>
+                </mat-form-field>
+              </td>
+            </ng-container>
+            
           
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-              <tr class="mat-row" *matNoDataRow>
-                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-              </tr>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          
+          <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+          </tr>
+          
           </table>
       </div>
-  
       <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select pages"></mat-paginator> -->
   </div>
   
-      
   <div class="right-container">
+    <div>
+    <h3 class="heading_L_R">Warenkorb</h3>
     <div class="list-container">
-      <h3 class="heading_L_R">Warenkorb</h3>
       <mat-list>
   @for (item of warenkorb; track item) {
-
         <mat-list-item>
           <span matListItemTitle>{{ item.artikel }}</span>
           <span matListItemLine>{{ item.anzahl }}x</span>
         </mat-list-item>
   }
-      </mat-list>
-      
+      </mat-list>      
     </div>
+    <section>
+      <div class="example-button-row">
+        <button  mat-raised-button (click)="openArtikel()">Checkout</button>
+      </div>
+    </section>
   </div>
-  
+  </div>  
   </div>

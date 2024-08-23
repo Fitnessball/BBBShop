@@ -18,6 +18,7 @@ import {
   MatDialogContent,
 } from '@angular/material/dialog';
 import { ArtikelhinzufuegenComponent } from '../artikelhinzufuegen/artikelhinzufuegen.component';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @Component({
@@ -35,7 +36,8 @@ import { ArtikelhinzufuegenComponent } from '../artikelhinzufuegen/artikelhinzuf
     MatSelectModule,
     MatInputModule,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatIconModule 
   ],
   templateUrl: './bbbshopliste.component.html',
   styleUrls: ['./bbbshopliste.component.css']
@@ -64,7 +66,7 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
       this.dataSource.data = this.artikel; 
       console.log(this.dataSource.data);
   
-      // Jetzt die Artikel durchgehen und den Warenkorb aktualisieren
+      // Warenkorb aktualisieren
       this.artikel.forEach((item) => {
         if (item.anzahl > 0) {
           this.updateWarenkorb(item);
@@ -140,11 +142,10 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
       this.warenkorb.splice(index, 1);
     }
   
-    this.cdr.detectChanges(); // Dies stellt sicher, dass Angular die Änderungen erkennt
+    this.cdr.detectChanges(); // Erkennt änderungen in den Variablen
     console.log('Warenkorb:', this.warenkorb);
   }
   
-
   onChipSelectionChange(event: MatChipSelectionChange, tag: any): void {
     if (event.selected) {
       this.selectedCategories.push(tag.k_name);

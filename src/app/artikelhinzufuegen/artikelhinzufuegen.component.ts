@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, inject, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -40,7 +40,7 @@ export class ArtikelhinzufuegenComponent {
   public kategorie: any[] = [];
   public artikel: any[] = [];
 
-  constructor(private _formBuilder: FormBuilder, private artikelService: ArtikelService) { }
+  constructor(private _formBuilder: FormBuilder, private artikelService: ArtikelService,private dialogRef: MatDialogRef<ArtikelhinzufuegenComponent>) { }
   ngOnInit(): void {
     this.kategorie = this.data.kategorie
     this.artikel = this.data.artikel
@@ -48,18 +48,19 @@ export class ArtikelhinzufuegenComponent {
     console.log("Hallo", this.kategorie)
   }
   firstFormGroup = this._formBuilder.group({
-    firstCtrl: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+$')]]
+    firstCtrl: ['', [Validators.required, Validators.pattern('^.{3,}$')]]
   });
-
+  
   secondFormGroup = this._formBuilder.group({
-    myControl: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+$')]]
+    myControl: ['', [Validators.required, Validators.pattern('^.{3,}$')]]
   });
-
+  
   thirdFormGroup = this._formBuilder.group({
-    thirdCtrl: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+$')]]
+    thirdCtrl: ['', [Validators.required, Validators.pattern('^.{3,}$')]]
   });
+  
 
-  isLinear = false;
+  isLinear = true;
 
   addArtikel() {
     const artikelName = this.firstFormGroup.get('firstCtrl')?.value;
@@ -78,7 +79,7 @@ export class ArtikelhinzufuegenComponent {
         next: (response) => {
           console.log('Hinzufügen des Artikel erfolgreich', response);
           this.artikelHinzugefuegt.emit();
-
+          this.dialogRef.close();
         },
         error: (error) => {
           console.error('Fehler beim erstellen des Artikel', error);

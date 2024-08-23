@@ -17,14 +17,7 @@
     padding-top: 0%;
 }
 
-.list-container {
-    padding: 5%;
-    margin: 2%;
-    padding-top: 0%;
-    width: 100%;
-    max-height: 50%;
-    min-height: 50%;
-}
+
 
 .middle-container {
     display: flex;
@@ -58,12 +51,6 @@ th {
 }
 
 
-.right-container {
-    display: flex;
-    justify-content: center;
-    height: 100%;
-    width: 20%;
-}
 
 .mat-mdc-form-field {
     font-size: 14px;
@@ -88,4 +75,55 @@ th {
     margin-left: 5%;
     margin-bottom: 5%;
     margin-top: 25%;
+    width: 100%;
 }
+
+.right-container {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 20%;
+}
+
+.list-container {
+    padding: 5%;
+    margin: 2%;
+    padding-top: 0%;
+    position: relative;
+    width: 100%;
+    height: 40%;
+    max-height: 40%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+.increment-decrement-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.increment-decrement-container button {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.number-container {
+    width: 70%;
+}
+
+input[type="number"] {
+    text-align: center;
+    padding: 0; /* Entfernt den Padding, falls vorhanden */
+    margin: 0; /* Entfernt den Margin, falls vorhanden */
+}
+
+/* Hide the spinner arrows in Chrome, Safari, Edge, and Opera */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+

@@ -1,17 +1,10 @@
-<mat-stepper #stepper >
-    <!-- errorMessage="Name is required." -->
+<mat-stepper [linear]="isLinear" #stepper >
     <mat-step [stepControl]="firstFormGroup" >
       <form [formGroup]="firstFormGroup">
         <ng-template matStepLabel>Name des Artikels</ng-template>
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Artikel</mat-label>
           <input matInput placeholder="Artikel" formControlName="firstCtrl" required>
-          <mat-error *ngIf="firstFormGroup.get('firstCtrl').hasError('required')">
-            Dieses Feld ist erforderlich.
-          </mat-error>
-          <mat-error *ngIf="firstFormGroup.get('firstCtrl').hasError('pattern')">
-            Nur Buchstaben sind erlaubt.
-          </mat-error>
         </mat-form-field>
         <div>
           <button mat-button matStepperNext>Weiter</button>
@@ -22,21 +15,18 @@
     <mat-step [stepControl]="secondFormGroup">
         <form [formGroup]="secondFormGroup">
           <ng-template matStepLabel>Kategorie des Artikels</ng-template>
-          <mat-form-field class="example-full-width">
+          <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Kategorie</mat-label>
-            <input type="text"
+            <mat-select
             placeholder="Wähle aus"
             aria-label="Kategorie"
-            matInput
             formControlName="myControl"
-            [matAutocomplete]="auto"
             required>
-     
-            <mat-autocomplete #auto="matAutocomplete">
               @for (option of kategorie; track option) {
                 <mat-option [value]="option.k_name">{{option.k_name}}</mat-option>
               }
-            </mat-autocomplete>
+          </mat-select>
+
           </mat-form-field>
           <div>
             <button mat-button matStepperPrevious>Zurück</button>
@@ -48,7 +38,7 @@
       <mat-step [stepControl]="thirdFormGroup">
         <form [formGroup]="thirdFormGroup">
           <ng-template matStepLabel>Gebinde des Artikels</ng-template>
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label>Gebinde</mat-label>
             <input matInput placeholder="Gebinde" formControlName="thirdCtrl" required>
           </mat-form-field>
@@ -57,4 +47,4 @@
           </div>
         </form>
       </mat-step>
-  </mat-stepper>
+</mat-stepper>
