@@ -19,6 +19,7 @@ import {
 } from '@angular/material/dialog';
 import { ArtikelhinzufuegenComponent } from '../artikelhinzufuegen/artikelhinzufuegen.component';
 import { MatIconModule } from '@angular/material/icon';
+import { CheckoutComponent } from '../checkout/checkout.component';
 
 
 @Component({
@@ -64,7 +65,7 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
         liste_index: index + 1
       }));
       this.dataSource.data = this.artikel; 
-      console.log(this.dataSource.data);
+      // console.log(this.dataSource.data);
   
       // Warenkorb aktualisieren
       this.artikel.forEach((item) => {
@@ -102,7 +103,13 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
       });
     });
   }
-
+  openCheckout(){
+    const dialogRef = this.dialog.open(CheckoutComponent, {
+      data: {
+        warenkorb: this.warenkorb
+      }
+    });
+  }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -114,11 +121,11 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
   onAnzahlChange(element: any) {
     if (element.anzahl < 0) { element.anzahl = 0; }
     if (element.anzahl === null) { element.anzahl = 0; }
-    console.log('Anzahl changed:', element);
+    // console.log('Anzahl changed:', element);
 
     this.artikelService.setcounter(element.a_nr, element.anzahl).subscribe({
       next: (response) => {
-        console.log('Update Erfolgreich', response);
+        // console.log('Update Erfolgreich', response);
 
         this.updateWarenkorb(element);
 
@@ -143,7 +150,7 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
     }
   
     this.cdr.detectChanges(); // Erkennt änderungen in den Variablen
-    console.log('Warenkorb:', this.warenkorb);
+    // console.log('Warenkorb:', this.warenkorb);
   }
   
   onChipSelectionChange(event: MatChipSelectionChange, tag: any): void {

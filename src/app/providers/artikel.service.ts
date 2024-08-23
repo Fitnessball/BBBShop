@@ -23,7 +23,7 @@ export class ArtikelService {
     return new Observable(observer => {
       this.http.get('http://127.0.0.1:8080/loadartikel').subscribe((data: any) => {
         this.artikel = data;
-        console.log(this.artikel)
+        // console.log(this.artikel)
         observer.next(data);
         observer.complete();
       }, err => {
@@ -37,7 +37,7 @@ export class ArtikelService {
     return new Observable(observer => {
       this.http.get('http://127.0.0.1:8080/loadkategorien').subscribe((data: any) => {
         this.kategorie = data;
-        console.log(this.kategorie)
+        // console.log(this.kategorie)
         observer.next(data);
         observer.complete();
       }, err => {
@@ -47,4 +47,27 @@ export class ArtikelService {
     });
   }
 
+  login(user_name: string, user_passwort: string): Observable<any> {
+    return new Observable(observer => {
+      this.http.post<any>('http://127.0.0.1:8080/loginaut', { user_name, user_passwort }).subscribe(
+        (response: any) => {
+          if (response.success) {
+            observer.next(response); // Erfolgreiche Antwort weiterleiten
+          } else {
+            observer.next(response); // Fehlermeldung weiterleiten
+          }
+          observer.complete();
+        },
+        (error) => {
+          observer.error(error); // Netzwerkfehler oder andere Fehler behandeln
+          observer.complete();
+        }
+      );
+    });
+  }
+
+
 }
+
+
+

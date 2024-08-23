@@ -196,3 +196,16 @@ app.post('/insertartikel', function (req, res) {
       res.status(200).send({message: 'Records inserted'});
     });
   });
+
+  app.post('/loginaut', function (req, res) {
+    const { user_name, user_passwort } = req.body;
+        const query = "SELECT * FROM user WHERE user_name = ? AND user_passwort = ?";
+        pool.query(query, [user_name, user_passwort], function (error, results) {
+            if (error) throw error;
+            if (results.length > 0) {
+                res.send({ success: true, user: results[0] });
+            } else {
+                res.send({ success: false, message: "Achtung: Die E-Mail-Adresse oder das Passwort stimmen nicht mit den bei uns hinterlegten Daten überein. Bitte überprüfe deine Eingaben und versuche es noch mal." });
+            }
+        });
+});

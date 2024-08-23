@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, inject, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
@@ -33,7 +33,7 @@ import { ArtikelService } from '../providers/artikel.service';
   templateUrl: './artikelhinzufuegen.component.html',
   styleUrl: './artikelhinzufuegen.component.css'
 })
-export class ArtikelhinzufuegenComponent {
+export class ArtikelhinzufuegenComponent implements OnInit{
   @Output() artikelHinzugefuegt = new EventEmitter<void>();
   data = inject(MAT_DIALOG_DATA);
   myControl = new FormControl('');
@@ -41,12 +41,14 @@ export class ArtikelhinzufuegenComponent {
   public artikel: any[] = [];
 
   constructor(private _formBuilder: FormBuilder, private artikelService: ArtikelService,private dialogRef: MatDialogRef<ArtikelhinzufuegenComponent>) { }
+  
   ngOnInit(): void {
     this.kategorie = this.data.kategorie
     this.artikel = this.data.artikel
-    console.log(this.artikel.length)
-    console.log("Hallo", this.kategorie)
+    // console.log(this.artikel.length)
+    // console.log("Hallo", this.kategorie)
   }
+
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', [Validators.required, Validators.pattern('^.{3,}$')]]
   });
@@ -68,25 +70,24 @@ export class ArtikelhinzufuegenComponent {
     const gebinde = this.thirdFormGroup.get('thirdCtrl')?.value;
 
     if (this.firstFormGroup.valid && this.secondFormGroup.valid && this.thirdFormGroup.valid) {
-      console.log("Artikel hinzugefügt");
-
-      console.log('Artikel Name:', artikelName);
-      console.log('Kategorie:', kategorie);
-      console.log('Gebinde:', gebinde);
-      console.log('Second FormGroup:', this.secondFormGroup.value);
+      // console.log("Artikel hinzugefügt");
+      // console.log('Artikel Name:', artikelName);
+      // console.log('Kategorie:', kategorie);
+      // console.log('Gebinde:', gebinde);
+      // console.log('Second FormGroup:', this.secondFormGroup.value);
 
       this.artikelService.insertArtikel(this.artikel.length + 1, 0, artikelName!, kategorie!, 0, gebinde!).subscribe({
         next: (response) => {
-          console.log('Hinzufügen des Artikel erfolgreich', response);
+          // console.log('Hinzufügen des Artikel erfolgreich', response);
           this.artikelHinzugefuegt.emit();
           this.dialogRef.close();
         },
         error: (error) => {
-          console.error('Fehler beim erstellen des Artikel', error);
+          // console.error('Fehler beim erstellen des Artikel', error);
         }
       });
     } else {
-      console.log("Bitte füllen Sie alle Felder korrekt aus.");
+      // console.log("Bitte füllen Sie alle Felder korrekt aus.");
     }
 
   }
