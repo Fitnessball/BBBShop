@@ -9,9 +9,10 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { ArtikelService } from '../providers/artikel.service';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { MatIconModule } from '@angular/material/icon';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-checkout',
   standalone: true,
@@ -37,7 +38,6 @@ export class CheckoutComponent implements OnInit {
   data = inject(MAT_DIALOG_DATA);
   myControl = new FormControl('');
   public warenkorb: any[] = [];
-  
   constructor(private _formBuilder: FormBuilder, private artikelService: ArtikelService, private dialogRef: MatDialogRef<CheckoutComponent>) { }
 
   ngOnInit(): void {
@@ -68,6 +68,7 @@ export class CheckoutComponent implements OnInit {
         next: (response) => {
           console.log('Login erfolgreich', response);
           this.dialogRef.close();
+          this.generatePDF()
         },
         error: (error) => {
           console.error('Fehler beim Login', error);
@@ -78,29 +79,50 @@ export class CheckoutComponent implements OnInit {
     }
   }
   
-
-
-
-
-
-
-
   
   generatePDF() {
-    const data = document.getElementById('contentToConvert');
-    
-    if (data) {
-      html2canvas(data).then(canvas => {
-        // Konvertiere das Canvas zu einem Bild
-        const imgWidth = 208;
-        const imgHeight = canvas.height * imgWidth / canvas.width;
-        const imgData = canvas.toDataURL('image/png');
-        
-        const pdf = new jsPDF();
-        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-        pdf.save('download.pdf');
-      });
-    }
+    const documentDefinition = {
+      content: [
+        { text: 'Warenkorb Details', style: 'header' },
+        {
+          style: 'tableExample',
+          table: {
+            headerRows: 1, // Specify that there is one header row
+            body: [
+              // Header Row
+              [
+                { text: 'Nr', bold: true },
+                { text: 'Regal Nr.', bold: true },
+                { text: 'Artikel', bold: true },
+                { text: 'Kategorie', bold: true },
+                { text: 'Anzahl', bold: true },
+                { text: 'Gebinde', bold: true },
+                
+              ],
+              // Data Rows
+              ...this.warenkorb.map(item => [
+                item.a_nr || '0',  // Fallback if `name` is missing
+                item.r_nr || '0',  // Fallback if `name` is missing
+                item.artikel || 'nd',       // Fallback if `quantity` is missing
+                item.kategorie || 'nd',       // Fallback if `quantity` is missing
+                item.anzahl || 'nd',       // Fallback if `quantity` is missing
+                item.gebinde || 'nd',       // Fallback if `quantity` is missing
+              ])
+            ]
+          }
+        }
+      ],
+      styles: {
+        header: {
+          fontSize: 18,
+          bold: true,
+        },
+        tableExample: {
+        }
+      }
+    };
+
+    pdfMake.createPdf(documentDefinition).download('warenkorb.pdf');
   }
 
 }
