@@ -45,7 +45,7 @@ import { CheckoutComponent } from '../checkout/checkout.component';
 })
 export class BbbshoplisteComponent implements AfterViewInit, OnInit {
   dialog = inject(MatDialog);
-
+  element = { anzahl: 0 };
   public artikel: any[] = [];
   public kategorie: any[] = [];
   public warenkorb: any[] = [];
@@ -111,23 +111,34 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'success') {
-        // Handle successful checkout here (e.g., navigate to order confirmation page)
         this.warenkorb.forEach(item => {
-          console.log(item.a_nr)
+            console.log(item)
         this.artikelService.setcounter(item.a_nr, 0).subscribe({
           next: (response) => {
-            // console.log('Update Erfolgreich', response);
-          this.updateWarenkorb(item.a_nr);
-            this.cdr.detectChanges();
+            this.updateWarenkorb;
+
           },
           error: (error) => {
             console.error('Error', error);
           }
         });
       });
-      
+      this.artikelService.getartikel().subscribe(data => {
+        console.log(this.artikel)
+        this.artikel = data.map((item: any, index: number) => ({
+          ...item,
+          liste_index: index + 1
+        }));
+        this.dataSource.data = this.artikel;
         this.warenkorb = [];
-        this.updateWarenkorb;
+        this.artikel.forEach((item) => {
+          if (item.anzahl > 0) {
+            this.updateWarenkorb(item);
+          }
+        });
+      });
+      this.cdr.detectChanges();
+      //fehler mit clearen liegt am index und der nummer da diese geändert wurden
       } else if (result === undefined) {
         // Handle dialog closure without confirmation
         console.log('Checkout dialog closed without confirmation.');
@@ -173,7 +184,6 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
     } else if (element.anzahl === 0 && index !== -1) {
       this.warenkorb.splice(index, 1);
     }
-  
     this.cdr.detectChanges(); // Erkennt änderungen in den Variablen
     // console.log('Warenkorb:', this.warenkorb);
   }
