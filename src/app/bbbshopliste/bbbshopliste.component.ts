@@ -109,6 +109,31 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
         warenkorb: this.warenkorb
       }
     });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'success') {
+        // Handle successful checkout here (e.g., navigate to order confirmation page)
+        this.warenkorb.forEach(item => {
+          console.log(item.a_nr)
+        this.artikelService.setcounter(item.a_nr, 0).subscribe({
+          next: (response) => {
+            // console.log('Update Erfolgreich', response);
+          this.updateWarenkorb(item.a_nr);
+            this.cdr.detectChanges();
+          },
+          error: (error) => {
+            console.error('Error', error);
+          }
+        });
+      });
+      
+        this.warenkorb = [];
+        this.updateWarenkorb;
+      } else if (result === undefined) {
+        // Handle dialog closure without confirmation
+        console.log('Checkout dialog closed without confirmation.');
+      }
+    });
+    
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

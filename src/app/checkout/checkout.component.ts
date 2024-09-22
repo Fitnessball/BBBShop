@@ -12,6 +12,7 @@ import { ArtikelService } from '../providers/artikel.service';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { MatIconModule } from '@angular/material/icon';
+import { ArtikelhinzufuegenComponent } from '../artikelhinzufuegen/artikelhinzufuegen.component';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-checkout',
@@ -44,8 +45,7 @@ export class CheckoutComponent implements OnInit {
     this.warenkorb = this.data.warenkorb
     console.log(this.warenkorb)
   }
-
-  firstFormGroup = this._formBuilder.group({
+    firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', [Validators.required, Validators.pattern('^.{3,}$')]],
     secondCtrl: ['', [Validators.required, Validators.pattern('^.{3,}$')]]
   });
@@ -55,20 +55,16 @@ export class CheckoutComponent implements OnInit {
     this.hide.set(!this.hide());
     event.stopPropagation();
   }
-
-  userLogin(){
+  userLogin() {
     const username = this.firstFormGroup.get('firstCtrl')?.value;
     const userpasswort = this.firstFormGroup.get('secondCtrl')?.value;
-  
-    console.log('Username:', username);
-    console.log('Password:', userpasswort);
-  
+
     if (this.firstFormGroup.valid) {
       this.artikelService.login(username!, userpasswort!).subscribe({
         next: (response) => {
           console.log('Login erfolgreich', response);
-          this.dialogRef.close();
-          this.generatePDF()
+          this.generatePDF();
+          this.dialogRef.close('success'); // Close dialog with 'success' result
         },
         error: (error) => {
           console.error('Fehler beim Login', error);
