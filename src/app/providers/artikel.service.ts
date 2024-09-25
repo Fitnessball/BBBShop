@@ -19,6 +19,10 @@ export class ArtikelService {
      return this.http.post<any>('http://127.0.0.1:8080/setcounter', {index,anzahl});
    }
 
+   public resetcounter(anzahl:number): Observable<any> {
+    return this.http.post<any>('http://127.0.0.1:8080/resetcounter', {anzahl});
+  }
+
   public getartikel(): Observable<any> {
     return new Observable(observer => {
       this.http.get('http://127.0.0.1:8080/loadartikel').subscribe((data: any) => {

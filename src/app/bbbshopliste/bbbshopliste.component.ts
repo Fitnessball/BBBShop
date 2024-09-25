@@ -65,7 +65,6 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
         liste_index: index + 1
       }));
       this.dataSource.data = this.artikel; 
-      // console.log(this.dataSource.data);
   
       // Warenkorb aktualisieren
       this.artikel.forEach((item) => {
@@ -106,23 +105,21 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
   openCheckout(){
     const dialogRef = this.dialog.open(CheckoutComponent, {
       data: {
-        warenkorb: this.warenkorb
+         warenkorb: this.warenkorb
       }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'success') {
-        this.warenkorb.forEach(item => {
-            console.log(item)
-        this.artikelService.setcounter(item.a_nr, 0).subscribe({
+   
+        this.artikelService.resetcounter(0).subscribe({
           next: (response) => {
-            this.updateWarenkorb;
-
+            console.log("Warenkorb zurückgesetzt")
           },
           error: (error) => {
             console.error('Error', error);
           }
         });
-      });
+
       this.artikelService.getartikel().subscribe(data => {
         console.log(this.artikel)
         this.artikel = data.map((item: any, index: number) => ({
@@ -138,9 +135,7 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
         });
       });
       this.cdr.detectChanges();
-      //fehler mit clearen liegt am index und der nummer da diese geändert wurden
       } else if (result === undefined) {
-        // Handle dialog closure without confirmation
         console.log('Checkout dialog closed without confirmation.');
       }
     });
@@ -157,14 +152,10 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
   onAnzahlChange(element: any) {
     if (element.anzahl < 0) { element.anzahl = 0; }
     if (element.anzahl === null) { element.anzahl = 0; }
-    // console.log('Anzahl changed:', element);
 
     this.artikelService.setcounter(element.a_nr, element.anzahl).subscribe({
       next: (response) => {
-        // console.log('Update Erfolgreich', response);
-
         this.updateWarenkorb(element);
-
       },
       error: (error) => {
         console.error('Error', error);
@@ -184,8 +175,7 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
     } else if (element.anzahl === 0 && index !== -1) {
       this.warenkorb.splice(index, 1);
     }
-    this.cdr.detectChanges(); // Erkennt änderungen in den Variablen
-    // console.log('Warenkorb:', this.warenkorb);
+    this.cdr.detectChanges();
   }
   
   onChipSelectionChange(event: MatChipSelectionChange, tag: any): void {

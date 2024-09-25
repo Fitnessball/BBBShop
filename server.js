@@ -182,6 +182,20 @@ app.post('/setcounter', function (req, res) {
     });
 });
 
+app.post('/resetcounter', function (req, res) {
+    const sql = "UPDATE artikelliste SET anzahl = ?;";
+    const { anzahl } = req.body;
+
+    pool.query(sql, [anzahl], function (err, result) {
+        if (err) {
+            console.error(err);
+            res.status(500).send({ error: 'Database query failed' });
+            return;
+        }
+        res.status(200).send({ message: 'Records updated' });
+    });
+});
+
 
 app.post('/insertartikel', function (req, res) {
     const sql = "INSERT INTO artikelliste (a_nr,r_nr,artikel,kategorie,anzahl,gebinde) VALUES (?, ?, ?, ?, ?, ?)";
