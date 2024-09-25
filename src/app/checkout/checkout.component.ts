@@ -7,12 +7,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { ArtikelService } from '../providers/artikel.service';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { MatIconModule } from '@angular/material/icon';
-import { ArtikelhinzufuegenComponent } from '../artikelhinzufuegen/artikelhinzufuegen.component';
+import { DatePipe } from '@angular/common';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-checkout',
@@ -30,6 +29,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
     MatAutocompleteModule,
     MatIconModule
   ],
+  providers: [DatePipe],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,7 +39,11 @@ export class CheckoutComponent implements OnInit {
   data = inject(MAT_DIALOG_DATA);
   myControl = new FormControl('');
   public warenkorb: any[] = [];
-  constructor(private _formBuilder: FormBuilder, private artikelService: ArtikelService, private dialogRef: MatDialogRef<CheckoutComponent>) { }
+  currentDate: string;
+  constructor(private datePipe: DatePipe, private _formBuilder: FormBuilder, private artikelService: ArtikelService, private dialogRef: MatDialogRef<CheckoutComponent>) { 
+    const now = new Date();
+    this.currentDate = this.datePipe.transform(now, 'dd.MM.yyyy') || '';
+  }
 
   ngOnInit(): void {
     this.warenkorb = this.data.warenkorb
@@ -93,7 +97,6 @@ export class CheckoutComponent implements OnInit {
                 { text: 'Kategorie', bold: true },
                 { text: 'Anzahl', bold: true },
                 { text: 'Gebinde', bold: true },
-                
               ],
               // Data Rows
               ...this.warenkorb.map(item => [
@@ -118,7 +121,7 @@ export class CheckoutComponent implements OnInit {
       }
     };
 
-    pdfMake.createPdf(documentDefinition).download('warenkorb.pdf');
+    pdfMake.createPdf(documentDefinition).download('Warenkorb '+ this.currentDate +'.pdf');
   }
 
 }

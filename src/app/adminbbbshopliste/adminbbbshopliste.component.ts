@@ -24,7 +24,7 @@ import { CommonModule } from '@angular/common';
 import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-bbbshopliste',
+  selector: 'app-adminbbbshopliste',
   standalone: true,
   imports: [
     MatTableModule,
@@ -43,10 +43,10 @@ import { DatePipe } from '@angular/common';
     CommonModule 
   ],
   providers: [DatePipe],
-  templateUrl: './bbbshopliste.component.html',
-  styleUrls: ['./bbbshopliste.component.css']
+  templateUrl: './adminbbbshopliste.component.html',
+  styleUrls: ['./adminbbbshopliste.component.css']
 })
-export class BbbshoplisteComponent implements AfterViewInit, OnInit {
+export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
   dialog = inject(MatDialog);
   currentDate: String;
   element = { anzahl: 0 };
