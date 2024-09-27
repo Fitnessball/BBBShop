@@ -32,20 +32,73 @@
                   <td mat-cell *matCellDef="let element"> {{element.liste_index}} </td>
               </ng-container>
               
-              <ng-container matColumnDef="artikel">
-                  <th mat-header-cell *matHeaderCellDef> Artikel </th>
-                  <td mat-cell *matCellDef="let element"> {{element.artikel}} </td>
+              <ng-container matColumnDef="r_nr">
+                <th mat-header-cell *matHeaderCellDef> Regal </th>
+                <td mat-cell *matCellDef="let element">
+                  <ng-container *ngIf="!editModeActive; else editTemplate">
+                    {{element.r_nr}}
+                  </ng-container>
+                  <ng-template #editTemplate>
+                    <input matInput [(ngModel)]="element.r_nr" (ngModelChange)="onValueChange(element, 'r_nr', $event)" />
+                  </ng-template>
+                </td>
               </ng-container>
               
-              <ng-container matColumnDef="kategorie">
+
+              <!-- <ng-container matColumnDef="artikel">
+                  <th mat-header-cell *matHeaderCellDef> Artikel </th>
+                  <td mat-cell *matCellDef="let element"> {{element.artikel}} </td>
+              </ng-container> -->
+
+
+              <ng-container matColumnDef="artikel">
+                <th mat-header-cell *matHeaderCellDef> Artikel </th>
+                <td mat-cell *matCellDef="let element">
+                  <ng-container *ngIf="!editModeActive; else editTemplate">
+                    {{element.artikel}}
+                  </ng-container>
+                  <ng-template #editTemplate>
+                    <input matInput [(ngModel)]="element.artikel" (ngModelChange)="onValueChange(element, 'artikel', $event)" />
+                  </ng-template>
+                </td>
+              </ng-container>
+              
+              <!-- <ng-container matColumnDef="kategorie">
                   <th mat-header-cell *matHeaderCellDef> Kategorie </th>
                   <td mat-cell *matCellDef="let element"> {{element.kategorie}} </td>
+              </ng-container> -->
+
+              <ng-container matColumnDef="kategorie">
+                <th mat-header-cell *matHeaderCellDef> Kategorie </th>
+                <td mat-cell *matCellDef="let element">
+                  <ng-container *ngIf="!editModeActive; else editTemplate">
+                    {{element.kategorie}}
+                  </ng-container>
+                  <ng-template #editTemplate>
+                    <input matInput [(ngModel)]="element.kategorie" (ngModelChange)="onValueChange(element, 'kategorie', $event)" />
+                  </ng-template>
+                </td>
               </ng-container>
               
             <ng-container matColumnDef="gebinde">
                 <th mat-header-cell *matHeaderCellDef> Gebinde </th>
                 <td mat-cell *matCellDef="let element"> {{element.gebinde}} </td>
             </ng-container>
+            
+            <ng-container matColumnDef="gebinde">
+              <th mat-header-cell *matHeaderCellDef> Gebinde </th>
+              <td mat-cell *matCellDef="let element">
+                <ng-container *ngIf="!editModeActive; else editTemplate">
+                  {{element.gebinde}}
+                </ng-container>
+                <ng-template #editTemplate>
+                  <input matInput [(ngModel)]="element.gebinde" (ngModelChange)="onValueChange(element, 'gebinde', $event)" />
+                </ng-template>
+              </td>
+            </ng-container>
+           
+
+
             <ng-container matColumnDef="anzahl">
               <th mat-header-cell *matHeaderCellDef> Anzahl </th>
               <td mat-cell *matCellDef="let element">
@@ -96,6 +149,18 @@
         <button *ngIf="warenkorb.length > 0"  mat-raised-button (click)="openCheckout()">Checkout</button>
       </div>
     </section>
+    <div class="edit-button-container">
+      <section>
+        <div class="example-button-row" *ngIf="!editModeActive; else savebutton">
+          <button (click)="editMode()" mat-raised-button >Bearbeiten</button>
+        </div>
+        <ng-template #savebutton>
+          <div class="example-button-row" >
+            <button (click)="editMode()" mat-raised-button >Speichern</button>
+          </div>
+        </ng-template> 
+      </section>
+    </div>
   </div>
   </div>  
   </div>

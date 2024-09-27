@@ -49,13 +49,14 @@ import { DatePipe } from '@angular/common';
 export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
   dialog = inject(MatDialog);
   currentDate: String;
+  editModeActive: boolean = false;
   element = { anzahl: 0 };
   public artikel: any[] = [];
   public kategorie: any[] = [];
   public warenkorb: any[] = [];
   dataSource = new MatTableDataSource<any>();
   selectedCategories: string[] = [];
-  displayedColumns: string[] = ['liste_index', 'artikel', 'kategorie', 'gebinde', 'anzahl'];
+  displayedColumns: string[] = ['liste_index','r_nr', 'artikel', 'kategorie', 'gebinde', 'anzahl'];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -72,7 +73,6 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
         liste_index: index + 1
       }));
       this.dataSource.data = this.artikel; 
-  
       // Warenkorb aktualisieren
       this.artikel.forEach((item) => {
         if (item.anzahl > 0) {
@@ -120,7 +120,6 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
    
         this.artikelService.resetcounter(0).subscribe({
           next: (response) => {
-            console.log("Warenkorb zurückgesetzt")
           },
           error: (error) => {
             console.error('Error', error);
@@ -128,7 +127,6 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
         });
 
       this.artikelService.getartikel().subscribe(data => {
-        console.log(this.artikel)
         this.artikel = data.map((item: any, index: number) => ({
           ...item,
           liste_index: index + 1
@@ -143,7 +141,6 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
       });
       this.cdr.detectChanges();
       } else if (result === undefined) {
-        console.log('Checkout dialog closed without confirmation.');
       }
     });
     
@@ -154,6 +151,35 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+  editMode() {
+    this.editModeActive = !this.editModeActive;
+    this.artikelService.getartikel().subscribe(data => {
+      this.artikel = data.map((item: any, index: number) => ({
+        ...item,
+        liste_index: index + 1
+      }));
+      this.dataSource.data = this.artikel; 
+      // Warenkorb aktualisieren
+      this.artikel.forEach((item) => {
+        if (item.anzahl > 0) {
+          this.updateWarenkorb(item);
+        }
+      });
+    });
+  }
+
+  onValueChange(element: any, field: string, value: string) {
+    element[field] = value;
+    console.log(element)
+    this.artikelService.setedit(element.a_nr,element.r_nr,element.artikel,element.kategorie,element.anzahl,element.gebinde).subscribe({
+      next: (response) => {
+      },
+      error: (error) => {
+        console.error('Error', error);
+      }
+    });
+
   }
 
   onAnzahlChange(element: any) {
@@ -178,12 +204,12 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
         this.warenkorb.push({ ...element });
       } else {
         this.warenkorb[index].anzahl = element.anzahl;
+        this.warenkorb[index].artikel = element.artikel;
       }
     } else if (element.anzahl === 0 && index !== -1) {
       this.warenkorb.splice(index, 1);
     }
     this.cdr.detectChanges();
-    console.log(this.warenkorb)
   }
   
   onChipSelectionChange(event: MatChipSelectionChange, tag: any): void {

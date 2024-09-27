@@ -6,5 +6,5 @@ import { AdminbbbshoplisteComponent } from './adminbbbshopliste/adminbbbshoplist
 export const routes: Routes = [
     { path: '', component: AdminbbbshoplisteComponent },
     { path: 'bbbshop', component: BbbshoplisteComponent },
-    { path: 'adminbbbshop', component: AdminbbbshoplisteComponent }
+    { path: 'adminbbbshop', component: AdminbbbshoplisteComponent}
 ];

@@ -68,7 +68,7 @@ export class CheckoutComponent implements OnInit {
         next: (response) => {
           console.log('Login erfolgreich', response);
           this.generatePDF();
-          this.dialogRef.close('success'); // Close dialog with 'success' result
+          this.dialogRef.close('success');
         },
         error: (error) => {
           console.error('Fehler beim Login', error);
@@ -81,6 +81,7 @@ export class CheckoutComponent implements OnInit {
   
   
   generatePDF() {
+    const sortedWarenkorb = this.warenkorb.sort((a, b) => (a.r_nr || 0) - (b.r_nr || 0));
     const documentDefinition = {
       content: [
         { text: 'Warenkorb Details', style: 'header' },
@@ -99,7 +100,7 @@ export class CheckoutComponent implements OnInit {
                 { text: 'Gebinde', bold: true },
               ],
               // Data Rows
-              ...this.warenkorb.map(item => [
+              ...sortedWarenkorb.map(item => [
                 item.a_nr || '0',  // Fallback if `name` is missing
                 item.r_nr || '0',  // Fallback if `name` is missing
                 item.artikel || 'nd',       // Fallback if `quantity` is missing
