@@ -56,9 +56,7 @@ io.on('connection', (socket) => {
 // END websockets
 
 // application -------------------------------------------------------------
-app.get('/', function (req, res) {
-    res.sendFile('index.html', { root: __dirname + '/dist/BBBShop/browser' }); // TODO rename to your app-name
-});
+
 
 var pool;
 
@@ -235,4 +233,8 @@ app.post('/insertartikel', function (req, res) {
                 res.send({ success: false, message: "Achtung: Die E-Mail-Adresse oder das Passwort stimmen nicht mit den bei uns hinterlegten Daten überein. Bitte überprüfe deine Eingaben und versuche es noch mal." });
             }
         });
+});
+
+app.get('/*', function (req, res) {
+    res.sendFile('index.html', { root: __dirname + '/dist/BBBShop/browser' }); // TODO rename to your app-name
 });

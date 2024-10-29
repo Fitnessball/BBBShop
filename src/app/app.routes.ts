@@ -4,7 +4,7 @@ import { AdminbbbshoplisteComponent } from './adminbbbshopliste/adminbbbshoplist
 
 
 export const routes: Routes = [
-    { path: '', component: AdminbbbshoplisteComponent },
+    { path: '', component:  BbbshoplisteComponent},
     { path: 'bbbshop', component: BbbshoplisteComponent },
-    { path: 'adminbbbshop', component: AdminbbbshoplisteComponent}
+    { path: 'admin', component: AdminbbbshoplisteComponent}
 ];

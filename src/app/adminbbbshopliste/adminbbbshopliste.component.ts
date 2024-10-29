@@ -56,7 +56,7 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
   public warenkorb: any[] = [];
   dataSource = new MatTableDataSource<any>();
   selectedCategories: string[] = [];
-  displayedColumns: string[] = ['liste_index','r_nr', 'artikel', 'kategorie', 'gebinde', 'anzahl'];
+  displayedColumns: string[] = ['liste_index','r_nr', 'artikel', 'kategorie', 'gebinde','delete'];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
