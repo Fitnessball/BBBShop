@@ -125,10 +125,11 @@
              
                 </ng-container>
                 <ng-template #editTemplate>
-                  <button mat-fab aria-label="Artikel löschen">
-                    <mat-icon>delete</mat-icon>
+                  <button mat-fab aria-label="Artikel löschen" (click)="openDelete(element.a_nr)">
+                     <mat-icon>delete</mat-icon>
                   </button>
-                </ng-template>
+               </ng-template>
+               
               </td>
             </ng-container>
           

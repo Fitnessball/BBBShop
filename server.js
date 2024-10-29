@@ -207,6 +207,20 @@ app.post('/setedit', function (req, res) {
       res.status(200).send({message: 'Records inserted'});
     });
   });
+  
+  app.post('/deleteArtikel', function (req, res) {
+    const sql = "DELETE FROM artikelliste WHERE a_nr = ?";
+    const {a_nr} = req.body;
+  
+    pool.query(sql, [a_nr], function(err, result) {
+      if (err) {
+        console.error(err);
+        res.status(500).send({error: 'Database query failed'});
+        return;
+      }
+      res.status(200).send({message: 'Records inserted'});
+    });
+  });
 
 app.post('/insertartikel', function (req, res) {
     const sql = "INSERT INTO artikelliste (a_nr,r_nr,artikel,kategorie,anzahl,gebinde) VALUES (?, ?, ?, ?, ?, ?)";
@@ -236,5 +250,5 @@ app.post('/insertartikel', function (req, res) {
 });
 
 app.get('/*', function (req, res) {
-    res.sendFile('index.html', { root: __dirname + '/dist/BBBShop/browser' }); // TODO rename to your app-name
+    res.sendFile('index.html', { root: path.join(__dirname, '/dist/BBBShop/browser') });
 });

@@ -22,6 +22,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CheckoutComponent } from '../checkout/checkout.component';
 import { CommonModule } from '@angular/common';
 import { DatePipe } from '@angular/common';
+import { ArtikelentfernenComponent } from '../artikelentfernen/artikelentfernen.component';
 
 @Component({
   selector: 'app-adminbbbshopliste',
@@ -98,7 +99,6 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
         artikel: this.artikel
       }
     });
-    
     dialogRef.componentInstance.artikelHinzugefuegt.subscribe(() => {
       this.artikelService.getartikel().subscribe(data => {
         this.artikel = data.map((item: any, index: number) => ({
@@ -109,6 +109,25 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
       });
     });
   }
+
+  openDelete(index: number){
+    console.log(index);
+    const dialogRef = this.dialog.open(ArtikelentfernenComponent, {
+      data: {
+        index: index
+      }
+    });
+    dialogRef.componentInstance.artikelGeloescht.subscribe(() => {
+      this.artikelService.getartikel().subscribe(data => {
+        this.artikel = data.map((item: any, index: number) => ({
+          ...item,
+          liste_index: index + 1
+        }));
+        this.dataSource.data = this.artikel; 
+      });
+    });
+  }
+
   openCheckout(){
     const dialogRef = this.dialog.open(CheckoutComponent, {
       data: {

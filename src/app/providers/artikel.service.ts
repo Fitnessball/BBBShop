@@ -24,7 +24,11 @@ export class ArtikelService {
      return this.http.post<any>('http://127.0.0.1:8080/setedit', {a_nr,r_nr,artikel,kategorie,anzahl,gebinde});
    }
 
+   public deleteArtikel(a_nr:number): Observable<any> {
+     return this.http.post<any>('http://127.0.0.1:8080/deleteArtikel', {a_nr});
+   }
    
+
    public resetcounter(anzahl:number): Observable<any> {
     return this.http.post<any>('http://127.0.0.1:8080/resetcounter', {anzahl});
   }
