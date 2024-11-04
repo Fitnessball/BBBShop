@@ -195,10 +195,10 @@ app.post('/resetcounter', function (req, res) {
 });
 
 app.post('/setedit', function (req, res) {
-    const sql = "UPDATE artikelliste SET r_nr = ?, artikel = ?, kategorie = ?, anzahl = ?, gebinde = ? WHERE a_nr = ?";
-    const {r_nr,artikel,kategorie,anzahl,gebinde,a_nr} = req.body;
+    const sql = "UPDATE artikelliste SET r_nr = ?, artikel = ?, kategorie = ?, anzahl = ?, gebinde = ?, k_id = ? WHERE a_nr = ?";
+    const {r_nr,artikel,kategorie,anzahl,gebinde,k_id,a_nr} = req.body;
   
-    pool.query(sql, [r_nr,artikel,kategorie,anzahl,gebinde,a_nr], function(err, result) {
+    pool.query(sql, [r_nr,artikel,kategorie,anzahl,gebinde,k_id,a_nr], function(err, result) {
       if (err) {
         console.error(err);
         res.status(500).send({error: 'Database query failed'});
@@ -244,6 +244,8 @@ app.post('/setedit', function (req, res) {
       res.status(200).send({message: 'Records inserted'});
     });
   });
+
+
   app.post('/deleteKategorie', function (req, res) {
     const { k_id } = req.body;
   
@@ -264,7 +266,7 @@ app.post('/setedit', function (req, res) {
         }
   
         const sql1 = "DELETE FROM kategorien WHERE k_id = ?";
-        const sql2 = "UPDATE artikelliste SET kategorie = 'Sonstiges', k_id = 6 WHERE k_id = ?";
+        const sql2 = "UPDATE artikelliste SET kategorie = 'Sonstiges', k_id = 1 WHERE k_id = ?";
   
         connection.query(sql1, [k_id], (err, result) => {
           if (err) {
@@ -307,6 +309,19 @@ app.post('/insertartikel', function (req, res) {
     const {a_nr,r_nr,artikel,kategorie,anzahl,gebinde} = req.body;
   
     pool.query(sql, [a_nr,r_nr,artikel,kategorie,anzahl,gebinde], function(err, result) {
+      if (err) {
+        console.error(err);
+        res.status(500).send({error: 'Database query failed'});
+        return;
+      }
+      res.status(200).send({message: 'Records inserted'});
+    });
+  });
+app.post('/insertkategorie', function (req, res) {
+    const sql = "INSERT INTO kategorien (k_id,k_name) VALUES (?, ?)";
+    const {k_id,k_name} = req.body;
+  
+    pool.query(sql, [k_id,k_name], function(err, result) {
       if (err) {
         console.error(err);
         res.status(500).send({error: 'Database query failed'});

@@ -16,7 +16,7 @@
 
             <ng-container>
               <input matInput [(ngModel)]="tag.k_name" (ngModelChange)="onTagChange(tag, 'tag_name', $event)" />
-              <button *ngIf="tag.k_id && tag.k_id !== 6" mat-fab aria-label="Kategorie löschen" (click)="openDeleteKategorie(tag.k_id)">
+              <button *ngIf="tag.k_id && tag.k_id !== 1" mat-fab aria-label="Kategorie löschen" (click)="openDeleteKategorie(tag.k_id)">
                 <mat-icon >delete</mat-icon>
              </button>
             </ng-container>
@@ -28,6 +28,11 @@
         <section>
         <div class="example-button-row">
           <button  mat-raised-button (click)="openArtikel()">Artikel erstellen</button>
+        </div>
+      </section>
+      <section>
+        <div class="example-button-row">
+          <button  mat-raised-button (click)="openKategorie()">Kategorie erstellen</button>
         </div>
       </section>
     </div>
@@ -93,7 +98,7 @@
                       <mat-select
                         placeholder="Wähle aus"
                         (selectionChange)="onKategorieChange($event.value, element)">
-                        <mat-option *ngFor="let option of kategorie; trackBy: trackOption" [value]="option.k_name">
+                        <mat-option *ngFor="let option of kategorie; trackBy: trackOption" [value]="{ k_id: option.k_id, k_name: option.k_name }">
                           {{ option.k_name }}
                         </mat-option>
                       </mat-select>

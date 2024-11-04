@@ -14,18 +14,33 @@ export class ArtikelService {
     //console.log(ticket_nr,kunden_id,veranstaltungs_nr,erwachsene,ermaessigte,kinder)
      return this.http.post<any>('http://127.0.0.1:8080/insertartikel', {a_nr,r_nr,artikel,kategorie,anzahl,gebinde});
    }
+  public insertKategorie(k_id:number,k_name:string): Observable<any> {
+    //console.log(ticket_nr,kunden_id,veranstaltungs_nr,erwachsene,ermaessigte,kinder)
+     return this.http.post<any>('http://127.0.0.1:8080/insertkategorie', {k_id,k_name});
+   }
 
   public setcounter(index:number,anzahl:number): Observable<any> {
      return this.http.post<any>('http://127.0.0.1:8080/setcounter', {index,anzahl});
    }
 
-   public setedit(a_nr:number,r_nr:number,artikel:string,kategorie:string,anzahl:number,gebinde:string): Observable<any> {
+   public setedit(a_nr:number,r_nr:number,artikel:string,kategorie:string,anzahl:number,gebinde:string,k_id:number): Observable<any> {
     //console.log(ticket_nr,kunden_id,veranstaltungs_nr,erwachsene,ermaessigte,kinder)
-     return this.http.post<any>('http://127.0.0.1:8080/setedit', {a_nr,r_nr,artikel,kategorie,anzahl,gebinde});
+     return this.http.post<any>('http://127.0.0.1:8080/setedit', {a_nr,r_nr,artikel,kategorie,anzahl,gebinde,k_id});
    }
-
+   public setTag(k_id:number, k_name: string): Observable<any> {
+    //console.log(ticket_nr,kunden_id,veranstaltungs_nr,erwachsene,ermaessigte,kinder)
+     return this.http.post<any>('http://127.0.0.1:8080/setTag', {k_name,k_id});
+   }
+   public setATag(k_id:number, k_name: string): Observable<any> {
+    //console.log(ticket_nr,kunden_id,veranstaltungs_nr,erwachsene,ermaessigte,kinder)
+     return this.http.post<any>('http://127.0.0.1:8080/setATag', {k_name,k_id});
+   }
    public deleteArtikel(a_nr:number): Observable<any> {
      return this.http.post<any>('http://127.0.0.1:8080/deleteArtikel', {a_nr});
+   }
+   
+   public deleteKategorie(k_id:number): Observable<any> {
+     return this.http.post<any>('http://127.0.0.1:8080/deleteKategorie', {k_id});
    }
    
 

@@ -28,7 +28,7 @@ import { ArtikelService } from '../providers/artikel.service';
   styleUrl: './kategorie-hinzufuegen.component.css'
 })
 export class KategorieHinzufuegenComponent implements OnInit {
-  @Output() artikelHinzugefuegt = new EventEmitter<void>();
+  @Output() kategorieHinzugefuegt = new EventEmitter<void>();
   data = inject(MAT_DIALOG_DATA);
   myControl = new FormControl('');
   public kategorie: any[] = [];
@@ -47,33 +47,22 @@ export class KategorieHinzufuegenComponent implements OnInit {
     firstCtrl: ['', [Validators.required, Validators.pattern('^.{3,}$')]]
   });
   
-  secondFormGroup = this._formBuilder.group({
-    myControl: ['', [Validators.required, Validators.pattern('^.{3,}$')]]
-  });
-  
-  thirdFormGroup = this._formBuilder.group({
-    thirdCtrl: ['', [Validators.required, Validators.pattern('^.{3,}$')]]
-  });
+
   
 
   isLinear = true;
 
-  addArtikel() {
-    const artikelName = this.firstFormGroup.get('firstCtrl')?.value;
-    const kategorie = this.secondFormGroup.get('myControl')?.value;
-    const gebinde = this.thirdFormGroup.get('thirdCtrl')?.value;
+  addKategorie() {
 
-    if (this.firstFormGroup.valid && this.secondFormGroup.valid && this.thirdFormGroup.valid) {
-      // console.log("Artikel hinzugefügt");
-      // console.log('Artikel Name:', artikelName);
-      // console.log('Kategorie:', kategorie);
-      // console.log('Gebinde:', gebinde);
-      // console.log('Second FormGroup:', this.secondFormGroup.value);
+    const kategorie = this.firstFormGroup.get('firstCtrl')?.value;
+    console.log(kategorie)
 
-      this.artikelService.insertArtikel(this.artikel.length + 1, 0, artikelName!, kategorie!, 0, gebinde!).subscribe({
+    if (this.firstFormGroup.valid) {
+
+      this.artikelService.insertKategorie(this.kategorie.length + 1,kategorie!).subscribe({
         next: (response) => {
           // console.log('Hinzufügen des Artikel erfolgreich', response);
-          this.artikelHinzugefuegt.emit();
+          this.kategorieHinzugefuegt.emit();
           this.dialogRef.close();
         },
         error: (error) => {

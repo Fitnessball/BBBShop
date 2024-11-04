@@ -24,6 +24,7 @@ import { CommonModule } from '@angular/common';
 import { DatePipe } from '@angular/common';
 import { ArtikelentfernenComponent } from '../artikelentfernen/artikelentfernen.component';
 import { KategorieentfernenComponent } from '../kategorieentfernen/kategorieentfernen.component';
+import { KategorieHinzufuegenComponent } from '../kategorie-hinzufuegen/kategorie-hinzufuegen.component';
 
 @Component({
   selector: 'app-adminbbbshopliste',
@@ -107,6 +108,26 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
           liste_index: index + 1
         }));
         this.dataSource.data = this.artikel; 
+      });
+    });
+  }
+  openKategorie() {
+    const dialogRef = this.dialog.open(KategorieHinzufuegenComponent, {
+      data: {
+        kategorie: this.kategorie,
+        artikel: this.artikel
+      }
+    });
+    dialogRef.componentInstance.kategorieHinzugefuegt.subscribe(() => {
+      this.artikelService.getartikel().subscribe(data => {
+        this.artikel = data.map((item: any, index: number) => ({
+          ...item,
+          liste_index: index + 1
+        }));
+        this.dataSource.data = this.artikel; 
+      });
+      this.artikelService.getkategorie().subscribe(data => {
+        this.kategorie = data;
       });
     });
   }
@@ -221,7 +242,7 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
   onValueChange(element: any, field: string, value: any) {
     element[field] = value;
     console.log(element)
-    this.artikelService.setedit(element.a_nr,element.r_nr,element.artikel,element.kategorie,element.anzahl,element.gebinde).subscribe({
+    this.artikelService.setedit(element.a_nr,element.r_nr,element.artikel,element.kategorie,element.anzahl,element.gebinde,element.k_id).subscribe({
       next: (response) => {
       },
       error: (error) => {
@@ -229,9 +250,8 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
       }
     });
   }
-  onKategorieChange(selectedCategory: string,element: any) {
-    console.log('Selected category:', selectedCategory);
-    this.artikelService.setedit(element.a_nr,element.r_nr,element.artikel,selectedCategory,element.anzahl,element.gebinde).subscribe({
+  onKategorieChange(selectedOption: { k_id: number, k_name: string },element: any) {
+    this.artikelService.setedit(element.a_nr,element.r_nr,element.artikel,selectedOption.k_name,element.anzahl,element.gebinde,selectedOption.k_id).subscribe({
       next: (response) => {
       },
       error: (error) => {

@@ -1,49 +1,13 @@
 <mat-stepper [linear]="isLinear" #stepper >
-    <mat-step [stepControl]="firstFormGroup" >
-      <form [formGroup]="firstFormGroup">
-        <ng-template matStepLabel>Name des Artikels</ng-template>
-        <mat-form-field appearance="outline">
-          <mat-label>Artikel</mat-label>
-          <input matInput placeholder="Artikel" formControlName="firstCtrl" required>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperNext>Weiter</button>
-        </div>
-      </form>
-    </mat-step>
-    
-    <mat-step [stepControl]="secondFormGroup">
-        <form [formGroup]="secondFormGroup">
-          <ng-template matStepLabel>Kategorie des Artikels</ng-template>
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Kategorie</mat-label>
-            <mat-select
-            placeholder="Wähle aus"
-            aria-label="Kategorie"
-            formControlName="myControl"
-            required>
-              @for (option of kategorie; track option) {
-                <mat-option [value]="option.k_name">{{option.k_name}}</mat-option>
-              }
-          </mat-select>
-
-          </mat-form-field>
-          <div>
-            <button mat-button matStepperPrevious>Zurück</button>
-            <button mat-button matStepperNext>Weiter</button>
-          </div>
-        </form>
-      </mat-step>
-
-      <mat-step [stepControl]="thirdFormGroup">
-        <form [formGroup]="thirdFormGroup">
-          <ng-template matStepLabel>Gebinde des Artikels</ng-template>
+      <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel>Name der Kategorie</ng-template>
           <mat-form-field appearance="outline">
-            <mat-label>Gebinde</mat-label>
-            <input matInput placeholder="Gebinde" formControlName="thirdCtrl" required>
+            <mat-label>Kategorie</mat-label>
+            <input matInput placeholder="Kategorie" formControlName="firstCtrl" required>
           </mat-form-field>
           <div>
-            <button mat-button (click)="addArtikel()">Artikel hinzufügen</button>
+            <button mat-button (click)="addKategorie()">Kategorie hinzufügen</button>
           </div>
         </form>
       </mat-step>
