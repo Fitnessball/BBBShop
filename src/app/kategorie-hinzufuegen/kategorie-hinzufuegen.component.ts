@@ -1,0 +1,89 @@
+import { ChangeDetectorRef, Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MAT_DIALOG_DATA, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { ArtikelService } from '../providers/artikel.service';
+@Component({
+  selector: 'app-kategorie-hinzufuegen',
+  standalone: true,
+  imports: [
+    MatDialogTitle,
+    MatDialogContent,
+    MatButtonModule,
+    MatStepperModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatAutocompleteModule
+  ],
+  templateUrl: './kategorie-hinzufuegen.component.html',
+  styleUrl: './kategorie-hinzufuegen.component.css'
+})
+export class KategorieHinzufuegenComponent implements OnInit {
+  @Output() artikelHinzugefuegt = new EventEmitter<void>();
+  data = inject(MAT_DIALOG_DATA);
+  myControl = new FormControl('');
+  public kategorie: any[] = [];
+  public artikel: any[] = [];
+
+  constructor(private _formBuilder: FormBuilder, private artikelService: ArtikelService,private dialogRef: MatDialogRef<KategorieHinzufuegenComponent>) { }
+  
+  ngOnInit(): void {
+    this.kategorie = this.data.kategorie
+    this.artikel = this.data.artikel
+    // console.log(this.artikel.length)
+    // console.log("Hallo", this.kategorie)
+  }
+
+  firstFormGroup = this._formBuilder.group({
+    firstCtrl: ['', [Validators.required, Validators.pattern('^.{3,}$')]]
+  });
+  
+  secondFormGroup = this._formBuilder.group({
+    myControl: ['', [Validators.required, Validators.pattern('^.{3,}$')]]
+  });
+  
+  thirdFormGroup = this._formBuilder.group({
+    thirdCtrl: ['', [Validators.required, Validators.pattern('^.{3,}$')]]
+  });
+  
+
+  isLinear = true;
+
+  addArtikel() {
+    const artikelName = this.firstFormGroup.get('firstCtrl')?.value;
+    const kategorie = this.secondFormGroup.get('myControl')?.value;
+    const gebinde = this.thirdFormGroup.get('thirdCtrl')?.value;
+
+    if (this.firstFormGroup.valid && this.secondFormGroup.valid && this.thirdFormGroup.valid) {
+      // console.log("Artikel hinzugefügt");
+      // console.log('Artikel Name:', artikelName);
+      // console.log('Kategorie:', kategorie);
+      // console.log('Gebinde:', gebinde);
+      // console.log('Second FormGroup:', this.secondFormGroup.value);
+
+      this.artikelService.insertArtikel(this.artikel.length + 1, 0, artikelName!, kategorie!, 0, gebinde!).subscribe({
+        next: (response) => {
+          // console.log('Hinzufügen des Artikel erfolgreich', response);
+          this.artikelHinzugefuegt.emit();
+          this.dialogRef.close();
+        },
+        error: (error) => {
+          // console.error('Fehler beim erstellen des Artikel', error);
+        }
+      });
+    } else {
+      // console.log("Bitte füllen Sie alle Felder korrekt aus.");
+    }
+
+  }
+
+}

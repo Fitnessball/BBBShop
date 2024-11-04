@@ -23,6 +23,7 @@ import { CheckoutComponent } from '../checkout/checkout.component';
 import { CommonModule } from '@angular/common';
 import { DatePipe } from '@angular/common';
 import { ArtikelentfernenComponent } from '../artikelentfernen/artikelentfernen.component';
+import { KategorieentfernenComponent } from '../kategorieentfernen/kategorieentfernen.component';
 
 @Component({
   selector: 'app-adminbbbshopliste',
@@ -128,6 +129,30 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
     });
   }
 
+  openDeleteKategorie(index: number){
+    console.log(index);
+    const dialogRef = this.dialog.open(KategorieentfernenComponent, {
+      data: {
+        index: index
+      }
+    });
+    dialogRef.componentInstance.KategorieGeloescht.subscribe(() => {
+      this.artikelService.getartikel().subscribe(data => {
+        this.artikel = data.map((item: any, index: number) => ({
+          ...item,
+          liste_index: index + 1
+        }));
+        this.dataSource.data = this.artikel; 
+      });
+      this.artikelService.getkategorie().subscribe(data => {
+        this.kategorie = data;
+      });
+      this.dataSource.data = this.artikel; 
+      this.cdr.detectChanges();
+    });
+
+  }
+
   openCheckout(){
     const dialogRef = this.dialog.open(CheckoutComponent, {
       data: {
@@ -186,9 +211,14 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
         }
       });
     });
+    this.artikelService.getkategorie().subscribe(data => {
+      this.kategorie = data;
+    });
   }
-
-  onValueChange(element: any, field: string, value: string) {
+  trackOption(index: number, option: any): string {
+    return option.id;
+  }
+  onValueChange(element: any, field: string, value: any) {
     element[field] = value;
     console.log(element)
     this.artikelService.setedit(element.a_nr,element.r_nr,element.artikel,element.kategorie,element.anzahl,element.gebinde).subscribe({
@@ -198,9 +228,38 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
         console.error('Error', error);
       }
     });
-
   }
-
+  onKategorieChange(selectedCategory: string,element: any) {
+    console.log('Selected category:', selectedCategory);
+    this.artikelService.setedit(element.a_nr,element.r_nr,element.artikel,selectedCategory,element.anzahl,element.gebinde).subscribe({
+      next: (response) => {
+      },
+      error: (error) => {
+        console.error('Error', error);
+      }
+    });
+  }
+  onTagChange(element: any, field: string, value: string){
+    element[field] = value;
+    console.log(element)
+    console.log(field)
+    console.log(value)
+    this.artikelService.setTag(element.k_id,element.k_name).subscribe({
+      next: (response) => {
+      },
+      error: (error) => {
+        console.error('Error', error);
+      }
+    });
+    this.artikelService.setATag(element.k_id,element.k_name).subscribe({
+      next: (response) => {
+      },
+      error: (error) => {
+        console.error('Error', error);
+      }
+    });
+     
+  }
   onAnzahlChange(element: any) {
     if (element.anzahl < 0) { element.anzahl = 0; }
     if (element.anzahl === null) { element.anzahl = 0; }

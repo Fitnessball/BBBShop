@@ -207,7 +207,30 @@ app.post('/setedit', function (req, res) {
       res.status(200).send({message: 'Records inserted'});
     });
   });
-  
+  app.post('/setTag', function (req, res) {
+    const sql = "UPDATE kategorien SET k_name = ? WHERE k_id = ?;";
+    const {k_name,k_id} = req.body;
+    pool.query(sql, [k_name,k_id], function(err, result) {
+      if (err) {
+        console.error(err);
+        res.status(500).send({error: 'Database query failed'});
+        return;
+      }
+      res.status(200).send({message: 'Records inserted'});
+    });
+  });
+  app.post('/setATag', function (req, res) {
+    const sql = "UPDATE artikelliste SET kategorie = ? WHERE k_id = ?;";
+    const {k_name,k_id} = req.body;
+    pool.query(sql, [k_name,k_id], function(err, result) {
+      if (err) {
+        console.error(err);
+        res.status(500).send({error: 'Database query failed'});
+        return;
+      }
+      res.status(200).send({message: 'Records inserted'});
+    });
+  });
   app.post('/deleteArtikel', function (req, res) {
     const sql = "DELETE FROM artikelliste WHERE a_nr = ?";
     const {a_nr} = req.body;
@@ -219,6 +242,63 @@ app.post('/setedit', function (req, res) {
         return;
       }
       res.status(200).send({message: 'Records inserted'});
+    });
+  });
+  app.post('/deleteKategorie', function (req, res) {
+    const { k_id } = req.body;
+  
+    // Use a transaction to ensure data consistency
+    pool.getConnection((err, connection) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send({ error: 'Database connection failed' });
+        return;
+      }
+  
+      connection.beginTransaction((err) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send({ error: 'Transaction start failed' });
+          connection.release();
+          return;
+        }
+  
+        const sql1 = "DELETE FROM kategorien WHERE k_id = ?";
+        const sql2 = "UPDATE artikelliste SET kategorie = 'Sonstiges', k_id = 6 WHERE k_id = ?";
+  
+        connection.query(sql1, [k_id], (err, result) => {
+          if (err) {
+            connection.rollback(() => {
+              console.error(err);
+              res.status(500).send({ error: 'Database query failed' });
+            });
+            connection.release();
+            return;
+          }
+  
+          connection.query(sql2, [k_id], (err, result) => {
+            if (err) {
+              connection.rollback(() => {
+                console.error(err);
+                res.status(500).send({ error: 'Database query failed' });
+              });
+              connection.release();
+              return;
+            }
+  
+            // Both queries successful, commit the transaction
+            connection.commit((err) => {
+              if (err) {
+                console.error(err);
+                res.status(500).send({ error: 'Transaction commit failed' });
+              } else {
+                res.status(200).send({ message: 'Kategorie deleted and artikelliste updated' });
+              }
+              connection.release();
+            });
+          });
+        });
+      });
     });
   });
 
