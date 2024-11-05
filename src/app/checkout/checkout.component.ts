@@ -79,6 +79,12 @@ export class CheckoutComponent implements OnInit {
     }
   }
   
+  generateRandomNumber(): number {
+    // Generate a random number between 100000 and 999999
+    const randomNumber = Math.floor(Math.random() * 900000) + 100000;
+    return randomNumber;
+  }
+  
   
   generatePDF() {
     const sortedWarenkorb = this.warenkorb.sort((a, b) => (a.r_nr || 0) - (b.r_nr || 0));
@@ -121,7 +127,8 @@ export class CheckoutComponent implements OnInit {
         }
       }
     };
-
+    const genereated_id = this.generateRandomNumber() 
+    console.log(genereated_id)
     pdfMake.createPdf(documentDefinition).download('Warenkorb '+ this.currentDate +'.pdf');
   }
 
