@@ -94,13 +94,11 @@ export class CheckoutComponent implements OnInit {
     });
   
     dialogRef.componentInstance.warenkorbHinzugefuegt.subscribe((warenkorb: string) => {
-      console.log(warenkorb)
-      this.checkout.emit();
+      console.log("das ist ein test for warenkorb man",warenkorb)
       const genereated_id = this.generateRandomNumber() 
-      this.generatePDF(warenkorb);
       this.warenkorb.forEach((item, index) => {
         console.log(`Item ${index + 1}:`, item.anzahl);
-       this.artikelService.insertWarenkorb(genereated_id,item.a_nr,item.r_nr,item.artikel,item.kategorie,item.anzahl,item.gebinde).subscribe({
+       this.artikelService.insertWarenkorb(genereated_id,item.a_nr,item.r_nr,item.artikel,item.kategorie,item.anzahl,item.gebinde,warenkorb).subscribe({
          next: (response) => {
            // console.log('Hinzufügen des Artikel erfolgreich', response);
 
@@ -110,6 +108,8 @@ export class CheckoutComponent implements OnInit {
            }
          });
     });
+    this.checkout.emit();
+    this.generatePDF(warenkorb);
     });
   }
   

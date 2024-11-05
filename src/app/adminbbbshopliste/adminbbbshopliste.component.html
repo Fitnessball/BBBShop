@@ -1,210 +1,200 @@
 <div class="main-container">
-    <div class="left-container">
-      <h3 class="heading_L_R">Kategorie Filter</h3>
-      <div class="tag-container">
-        <mat-chip-listbox class="mat-mdc-chip-set-stacked" aria-label="Kategoriefilter" multiple *ngIf="!editModeActive; else editTemplate">
+  <div class="left-container">
+    <h3 class="heading_L_R">Kategorie Filter</h3>
+    <div class="tag-container">
+      <mat-chip-listbox class="mat-mdc-chip-set-stacked" aria-label="Kategoriefilter" multiple
+        *ngIf="!editModeActive; else editTemplate">
         @for (tag of kategorie; track tag) {
-          <mat-chip-option (selectionChange)="onChipSelectionChange($event, tag)" >
-            <ng-container>
-              {{tag.k_name}}
-            </ng-container>
-          </mat-chip-option>
+        <mat-chip-option (selectionChange)="onChipSelectionChange($event, tag)">
+          <ng-container>
+            {{tag.k_name}}
+          </ng-container>
+        </mat-chip-option>
         }
       </mat-chip-listbox>
       <ng-template #editTemplate>
         @for (tag of kategorie; track tag) {
-
-            <ng-container>
-              <input matInput [(ngModel)]="tag.k_name" (ngModelChange)="onTagChange(tag, 'tag_name', $event)" />
-              <button *ngIf="tag.k_id && tag.k_id !== 1" mat-fab aria-label="Kategorie löschen" (click)="openDeleteKategorie(tag.k_id)">
-                <mat-icon >delete</mat-icon>
-             </button>
-            </ng-container>
-
+        <ng-container>
+          <input matInput [(ngModel)]="tag.k_name" (ngModelChange)="onTagChange(tag, 'tag_name', $event)" />
+          <button *ngIf="tag.k_id && tag.k_id !== 1" mat-fab aria-label="Kategorie löschen"
+            (click)="openDeleteKategorie(tag.k_id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </ng-container>
         }
       </ng-template>
-      
-      </div>
-        <section>
-        <div class="example-button-row">
-          <button  mat-raised-button (click)="openArtikel()">Artikel erstellen</button>
-        </div>
-      </section>
-      <section>
-        <div class="example-button-row">
-          <button  mat-raised-button (click)="openKategorie()">Kategorie erstellen</button>
-        </div>
-      </section>
+
     </div>
 
-    <div class="middle-container">
-      <h1 class="shop_heading">Adminbereich Tabakquartier</h1>
-      <mat-form-field>
-          <mat-label>Suche</mat-label>
-          <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
-      </mat-form-field>
-    
-      <div class="main-table-container">
-          <table class="main-table" mat-table [dataSource]="dataSource" matSort>
 
-              <ng-container matColumnDef="liste_index">
-                  <th mat-header-cell *matHeaderCellDef> Nr. </th>
-                  <td mat-cell *matCellDef="let element"> {{element.liste_index}} </td>
-              </ng-container>
-              
-              <ng-container matColumnDef="r_nr">
-                <th mat-header-cell *matHeaderCellDef> Regal </th>
-                <td mat-cell *matCellDef="let element">
-                  <ng-container *ngIf="!editModeActive; else editTemplate">
-                    {{element.r_nr}}
-                  </ng-container>
-                  <ng-template #editTemplate>
-                    <input matInput [(ngModel)]="element.r_nr" (ngModelChange)="onValueChange(element, 'r_nr', $event)" />
-                  </ng-template>
-                </td>
-              </ng-container>
-              
+    <section>
+      <div class="example-button-row">
+        <button mat-raised-button (click)="openArtikel()">Artikel erstellen</button>
+      </div>
+    </section>
+    <section>
+      <div class="example-button-row">
+        <button mat-raised-button (click)="openKategorie()">Kategorie erstellen</button>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="middle-container">
+    <h1 class="shop_heading">Adminbereich Tabakquartier</h1>
+    <mat-form-field>
+      <mat-label>Suche</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
+    </mat-form-field>
+
+    <div class="main-table-container">
+      <table class="main-table" mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="liste_index">
+          <th mat-header-cell *matHeaderCellDef> Nr. </th>
+          <td mat-cell *matCellDef="let element"> {{element.liste_index}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="r_nr">
+          <th mat-header-cell *matHeaderCellDef> Regal </th>
+          <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="!editModeActive; else editTemplate">
+              {{element.r_nr}}
+            </ng-container>
+            <ng-template #editTemplate>
+              <input matInput [(ngModel)]="element.r_nr" (ngModelChange)="onValueChange(element, 'r_nr', $event)" />
+            </ng-template>
+          </td>
+        </ng-container>
 
 
 
+        <ng-container matColumnDef="artikel">
+          <th mat-header-cell *matHeaderCellDef> Artikel </th>
+          <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="!editModeActive; else editTemplate">
+              {{element.artikel}}
+            </ng-container>
+            <ng-template #editTemplate>
+              <input matInput [(ngModel)]="element.artikel"
+                (ngModelChange)="onValueChange(element, 'artikel', $event)" />
+            </ng-template>
+          </td>
+        </ng-container>
 
-              <ng-container matColumnDef="artikel">
-                <th mat-header-cell *matHeaderCellDef> Artikel </th>
-                <td mat-cell *matCellDef="let element">
-                  <ng-container *ngIf="!editModeActive; else editTemplate">
-                    {{element.artikel}}
-                  </ng-container>
-                  <ng-template #editTemplate>
-                    <input matInput [(ngModel)]="element.artikel" (ngModelChange)="onValueChange(element, 'artikel', $event)" />
-                  </ng-template>
-                </td>
-              </ng-container>
-              
-              <!-- <ng-container matColumnDef="kategorie">
+        <!-- <ng-container matColumnDef="kategorie">
                   <th mat-header-cell *matHeaderCellDef> Kategorie </th>
                   <td mat-cell *matCellDef="let element"> {{element.kategorie}} </td>
               </ng-container> -->
 
-              <ng-container matColumnDef="kategorie">
-                <th mat-header-cell *matHeaderCellDef> Kategorie </th>
-                <td mat-cell *matCellDef="let element">
-                  <ng-container *ngIf="!editModeActive; else editTemplate">
-                    {{ element.kategorie }}
+        <ng-container matColumnDef="kategorie">
+          <th mat-header-cell *matHeaderCellDef> Kategorie </th>
+          <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="!editModeActive; else editTemplate">
+              {{ element.kategorie }}
 
-                  </ng-container>
-                  <ng-template #editTemplate>
-                    <mat-form-field appearance="outline" class="example-full-width">
-                      <mat-label>{{ element.kategorie }}</mat-label>
-                      <mat-select
-                        placeholder="Wähle aus"
-                        (selectionChange)="onKategorieChange($event.value, element)">
-                        <mat-option *ngFor="let option of kategorie; trackBy: trackOption" [value]="{ k_id: option.k_id, k_name: option.k_name }">
-                          {{ option.k_name }}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </ng-template>
-                </td>
-              </ng-container>
-              
-            <ng-container matColumnDef="gebinde">
-                <th mat-header-cell *matHeaderCellDef> Gebinde </th>
-                <td mat-cell *matCellDef="let element"> {{element.gebinde}} </td>
             </ng-container>
-            
-            <ng-container matColumnDef="gebinde">
-              <th mat-header-cell *matHeaderCellDef> Gebinde </th>
-              <td mat-cell *matCellDef="let element">
-                <ng-container *ngIf="!editModeActive; else editTemplate">
-                  {{element.gebinde}}
-                </ng-container>
-                <ng-template #editTemplate>
-                  <input matInput [(ngModel)]="element.gebinde" (ngModelChange)="onValueChange(element, 'gebinde', $event)" />
-                </ng-template>
-              </td>
+            <ng-template #editTemplate>
+              <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>{{ element.kategorie }}</mat-label>
+                <mat-select placeholder="Wähle aus" (selectionChange)="onKategorieChange($event.value, element)">
+                  <mat-option *ngFor="let option of kategorie; trackBy: trackOption"
+                    [value]="{ k_id: option.k_id, k_name: option.k_name }">
+                    {{ option.k_name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ng-template>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="gebinde">
+          <th mat-header-cell *matHeaderCellDef> Gebinde </th>
+          <td mat-cell *matCellDef="let element"> {{element.gebinde}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="gebinde">
+          <th mat-header-cell *matHeaderCellDef> Gebinde </th>
+          <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="!editModeActive; else editTemplate">
+              {{element.gebinde}}
             </ng-container>
-           
+            <ng-template #editTemplate>
+              <input matInput [(ngModel)]="element.gebinde"
+                (ngModelChange)="onValueChange(element, 'gebinde', $event)" />
+            </ng-template>
+          </td>
+        </ng-container>
 
+        <ng-container matColumnDef="delete">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="!editModeActive; else editTemplate">
 
-            <!-- <ng-container matColumnDef="anzahl">
-              <th mat-header-cell *matHeaderCellDef> Anzahl </th>
-              <td mat-cell *matCellDef="let element">
-                <mat-form-field appearance="outline" class="number-container">
-                  <div class="increment-decrement-container">
-                    
-                    <button mat-icon-button (click)="element.anzahl = element.anzahl > 0 ? element.anzahl - 1 : 0; onAnzahlChange(element)">
-                      <mat-icon>remove</mat-icon>
-                    </button>
-            
-                    <input matInput type="number" [(ngModel)]="element.anzahl" min="0" (ngModelChange)="onAnzahlChange(element)">
-            
-                    <button mat-icon-button (click)="element.anzahl = element.anzahl + 1; onAnzahlChange(element)">
-                      <mat-icon>add</mat-icon>
-                    </button>
-                  </div>
-                </mat-form-field>
-              </td>
-            </ng-container>  -->
-
-
-
-            <ng-container matColumnDef="delete">
-              <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef="let element">
-                <ng-container *ngIf="!editModeActive; else editTemplate">
-             
-                </ng-container>
-                <ng-template #editTemplate>
-                  <button mat-fab aria-label="Artikel löschen" (click)="openDelete(element.a_nr)">
-                     <mat-icon>delete</mat-icon>
-                  </button>
-               </ng-template>
-               
-              </td>
             </ng-container>
-          
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          
-          <tr class="mat-row" *matNoDataRow>
-              <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-          </tr>
-          </table>
-      </div>
-      <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select pages"></mat-paginator> -->
+            <ng-template #editTemplate>
+              <button mat-fab aria-label="Artikel löschen" (click)="openDelete(element.a_nr)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </ng-template>
+
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
+      </table>
+    </div>
+    <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select pages"></mat-paginator> -->
   </div>
-  
+
   <div class="right-container">
     <div>
-    <!--<h3 class="heading_L_R">Warenkorb</h3>
-    <div class="list-container">
-      <mat-list>
-  @for (item of warenkorb; track item) {
-        <mat-list-item>
-          <span matListItemTitle>{{ item.artikel }}</span>
-          <span matListItemLine>{{ item.anzahl }}x | {{ currentDate }}</span>
-        </mat-list-item>
-  }
-      </mat-list>      
-    </div>
-    <section>
-      <div class="example-button-row">
-        <button *ngIf="warenkorb.length > 0"  mat-raised-button (click)="openCheckout()">Checkout</button>
+ 
+      <h3 class="heading_L_R">Warenkorb</h3>
+      <div class="list-container">
+        <mat-list *ngIf="!editModeActive; else editWarenkorb">
+          @for (item of warenkorbbezeichner; track item) {
+          <mat-list-item>
+            <span matListItemTitle>{{ item.warenkorbbezeichner }}</span>
+          </mat-list-item>
+          }
+        </mat-list>
+        <ng-template #editWarenkorb>
+          @for (item of warenkorbbezeichner; track item) {
+            <ng-container>
+              <span class="warenkorb_span" matListItemTitle>{{ item.warenkorbbezeichner }}
+              <button mat-fab aria-label="Warenkorb löschen" (click)="openDeleteWarenkorb(item.id)">
+              <mat-icon>delete</mat-icon>
+            </button></span>
+          </ng-container>
+            }
+        </ng-template>
       </div>
-    </section> -->
-    <div class="edit-button-container">
-      <section>
-        <div class="example-button-row" *ngIf="!editModeActive; else savebutton">
-          <button (click)="editMode()" mat-raised-button >Bearbeiten</button>
-        </div>
-        <ng-template #savebutton>
-          <div class="example-button-row" >
-            <button (click)="editMode()" mat-raised-button >Speichern</button>
+
+
+
+
+
+
+      <div class="edit-button-container">
+        <section>
+          <div class="example-button-row" *ngIf="!editModeActive; else savebutton">
+            <button (click)="editMode()" mat-raised-button>Bearbeiten</button>
           </div>
-        </ng-template> 
-      </section>
+          <ng-template #savebutton>
+            <div class="example-button-row">
+              <button (click)="editMode()" mat-raised-button>Speichern</button>
+            </div>
+          </ng-template>
+        </section>
+      </div>
+
+
     </div>
   </div>
-  </div>  
-  </div>
-
+</div>

@@ -245,10 +245,22 @@ app.post('/setedit', function (req, res) {
     });
   });
 
+  app.post('/deleteWarenkorb', function (req, res) {
+    const sql = "DELETE FROM warenkorbverzeichnis WHERE id = ?";
+    const {id} = req.body;
+  
+    pool.query(sql, [id], function(err, result) {
+      if (err) {
+        console.error(err);
+        res.status(500).send({error: 'Database query failed'});
+        return;
+      }
+      res.status(200).send({message: 'Records inserted'});
+    });
+  });
 
   app.post('/deleteKategorie', function (req, res) {
     const { k_id } = req.body;
-  
     // Use a transaction to ensure data consistency
     pool.getConnection((err, connection) => {
       if (err) {
@@ -318,10 +330,10 @@ app.post('/insertartikel', function (req, res) {
     });
   });
 app.post('/insertWarenkorb', function (req, res) {
-    const sql = "INSERT INTO warenkorbverzeichnis (id,a_nr,r_nr,artikel,kategorie,anzahl,gebinde) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    const {id,a_nr,r_nr,artikel,kategorie,anzahl,gebinde} = req.body;
+    const sql = "INSERT INTO warenkorbverzeichnis (id,a_nr,r_nr,artikel,kategorie,anzahl,gebinde, warenkorbbezeichner) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    const {id,a_nr,r_nr,artikel,kategorie,anzahl,gebinde, warenkorbbezeichner} = req.body;
   
-    pool.query(sql, [id,a_nr,r_nr,artikel,kategorie,anzahl,gebinde], function(err, result) {
+    pool.query(sql, [id,a_nr,r_nr,artikel,kategorie,anzahl,gebinde, warenkorbbezeichner], function(err, result) {
       if (err) {
         console.error(err);
         res.status(500).send({error: 'Database query failed'});
@@ -330,6 +342,27 @@ app.post('/insertWarenkorb', function (req, res) {
       res.status(200).send({message: 'Records inserted'});
     });
   });
+  app.get('/getWarenkorb', async function (req, res) {
+    const query = "SELECT * FROM warenkorbverzeichnis";
+    try {
+        const results = await executeQueryWithRetry(query);
+        const warenkorbbackup = results.map(row => ({
+            id: row.id,
+            a_nr: row.a_nr,
+            r_nr: row.r_nr,
+            artikel: row.artikel,
+            kategorie: row.kategorie,
+            anzahl: row.anzahl,
+            gebinde: row.gebinde,
+            warenkorbbezeichner: row.warenkorbbezeichner
+        }));
+        res.json(warenkorbbackup);
+        console.log(warenkorbbackup);
+    } catch (error) {
+        console.error('Query error: ' + error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 app.post('/insertkategorie', function (req, res) {
     const sql = "INSERT INTO kategorien (k_id,k_name) VALUES (?, ?)";
     const {k_id,k_name} = req.body;

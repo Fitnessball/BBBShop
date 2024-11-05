@@ -25,6 +25,7 @@ import { DatePipe } from '@angular/common';
 import { ArtikelentfernenComponent } from '../artikelentfernen/artikelentfernen.component';
 import { KategorieentfernenComponent } from '../kategorieentfernen/kategorieentfernen.component';
 import { KategorieHinzufuegenComponent } from '../kategorie-hinzufuegen/kategorie-hinzufuegen.component';
+import { WarenkorbentfernenComponent } from '../warenkorbentfernen/warenkorbentfernen.component';
 
 @Component({
   selector: 'app-adminbbbshopliste',
@@ -57,6 +58,9 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
   public artikel: any[] = [];
   public kategorie: any[] = [];
   public warenkorb: any[] = [];
+  public warenkorbbackup: any[] = [];
+  public warenkorbbezeichner: any[] = [];
+
   dataSource = new MatTableDataSource<any>();
   selectedCategories: string[] = [];
   displayedColumns: string[] = ['liste_index','r_nr', 'artikel', 'kategorie', 'gebinde','delete'];
@@ -66,7 +70,6 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
   constructor(private datePipe: DatePipe, private artikelService: ArtikelService, private cdr: ChangeDetectorRef) {
     const now = new Date();
     this.currentDate = this.datePipe.transform(now, 'dd.MM.yyyy') || '';
-
    }
 
   ngOnInit(): void {
@@ -87,6 +90,12 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
     this.artikelService.getkategorie().subscribe(data => {
       this.kategorie = data;
     });
+    this.artikelService.getWarenkorb().subscribe(data => {
+      // console.log(data)
+      this.warenkorbbackup = data;
+      this.warenkorbbezeichner = this.getUniqueIdWarenkorbPairs(this.warenkorbbackup)
+      console.log(this.warenkorbbezeichner)
+    });
   }
   
   ngAfterViewInit() {
@@ -94,6 +103,21 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  getUniqueIdWarenkorbPairs(artikelArray: any[]): { id: number, warenkorbbezeichner: string }[] {
+    const uniquePairs: { id: number, warenkorbbezeichner: string }[] = [];
+    const processedIds = new Set<number>(); // Set zum Speichern bereits verarbeiteter IDs
+  
+    artikelArray.forEach(item => {
+      if (!processedIds.has(item.id) && item.warenkorbbezeichner) {
+        processedIds.add(item.id);
+        uniquePairs.push({ id: item.id, warenkorbbezeichner: item.warenkorbbezeichner });
+      }
+    });
+  
+    return uniquePairs;
+  }
+  
+  
   openArtikel() {
     const dialogRef = this.dialog.open(ArtikelhinzufuegenComponent, {
       data: {
@@ -151,7 +175,6 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
   }
 
   openDeleteKategorie(index: number){
-    console.log(index);
     const dialogRef = this.dialog.open(KategorieentfernenComponent, {
       data: {
         index: index
@@ -173,7 +196,22 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
     });
 
   }
+  openDeleteWarenkorb(id: number){
+    console.log(id)
+    const dialogRef = this.dialog.open(WarenkorbentfernenComponent, {
+      data: {
+        id: id
+      }
+    });
+    dialogRef.componentInstance.WarenkorbGeloescht.subscribe(() => {
+      this.artikelService.getWarenkorb().subscribe(data => {
+        this.warenkorbbackup = data;
+      this.warenkorbbezeichner = this.getUniqueIdWarenkorbPairs(this.warenkorbbackup)
 
+      });
+      this.cdr.detectChanges();
+    });
+  }
   openCheckout(){
     const dialogRef = this.dialog.open(CheckoutComponent, {
       data: {
@@ -196,7 +234,7 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
           ...item,
           liste_index: index + 1
         }));
-        this.dataSource.data = this.artikel;
+        // this.dataSource.data = this.artikel;
         this.warenkorb = [];
         this.artikel.forEach((item) => {
           if (item.anzahl > 0) {

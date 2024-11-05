@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ArtikelService {
   artikel: Array<any> = [];
+  warenkorbBackup: Array<any> = [];
   kategorie: Array<any> = [];
   constructor(private http: HttpClient) { }
 
@@ -15,10 +16,11 @@ export class ArtikelService {
      return this.http.post<any>('http://127.0.0.1:8080/insertartikel', {a_nr,r_nr,artikel,kategorie,anzahl,gebinde,k_id});
    }
 
-  public insertWarenkorb(id:number,a_nr:number,r_nr:number,artikel:string,kategorie:string,anzahl:number,gebinde:string): Observable<any> {
+  public insertWarenkorb(id:number,a_nr:number,r_nr:number,artikel:string,kategorie:string,anzahl:number,gebinde:string,warenkorbbezeichner:string): Observable<any> {
     //console.log(ticket_nr,kunden_id,veranstaltungs_nr,erwachsene,ermaessigte,kinder)
-     return this.http.post<any>('http://127.0.0.1:8080/insertWarenkorb', {id,a_nr,r_nr,artikel,kategorie,anzahl,gebinde});
+     return this.http.post<any>('http://127.0.0.1:8080/insertWarenkorb', {id,a_nr,r_nr,artikel,kategorie,anzahl,gebinde,warenkorbbezeichner});
    }
+
   public insertKategorie(k_id:number,k_name:string): Observable<any> {
     //console.log(ticket_nr,kunden_id,veranstaltungs_nr,erwachsene,ermaessigte,kinder)
      return this.http.post<any>('http://127.0.0.1:8080/insertkategorie', {k_id,k_name});
@@ -48,6 +50,10 @@ export class ArtikelService {
      return this.http.post<any>('http://127.0.0.1:8080/deleteKategorie', {k_id});
    }
    
+   public deleteWarenkorb(id:number): Observable<any> {
+     return this.http.post<any>('http://127.0.0.1:8080/deleteWarenkorb', {id});
+   }
+   
 
    public resetcounter(anzahl:number): Observable<any> {
     return this.http.post<any>('http://127.0.0.1:8080/resetcounter', {anzahl});
@@ -58,6 +64,19 @@ export class ArtikelService {
       this.http.get('http://127.0.0.1:8080/loadartikel').subscribe((data: any) => {
         this.artikel = data;
         // console.log(this.artikel)
+        observer.next(data);
+        observer.complete();
+      }, err => {
+        observer.error(err);
+        observer.complete();
+      });
+    });
+  }
+  public getWarenkorb(): Observable<any> {
+    return new Observable(observer => {
+      this.http.get('http://127.0.0.1:8080/getWarenkorb').subscribe((data: any) => {
+        this.warenkorbBackup = data;
+        // console.log(this.warenkorbBackup)
         observer.next(data);
         observer.complete();
       }, err => {

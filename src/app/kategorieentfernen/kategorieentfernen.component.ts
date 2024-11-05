@@ -1,6 +1,5 @@
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ArtikelentfernenComponent } from '../artikelentfernen/artikelentfernen.component';
 import { ArtikelService } from '../providers/artikel.service';
 
 @Component({
