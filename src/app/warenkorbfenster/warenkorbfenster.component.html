@@ -1,0 +1,14 @@
+<mat-stepper [linear]="isLinear" #stepper >
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Bennene den Warenkorb</ng-template>
+        <mat-form-field appearance="outline">
+          <mat-label>Warenkorb</mat-label>
+          <input matInput placeholder="Warenkorb" formControlName="firstCtrl" required>
+        </mat-form-field>
+        <div>
+          <button mat-button (click)="addwarenkorb()">Warenkorb speichern</button>
+        </div>
+      </form>
+    </mat-step>
+</mat-stepper>

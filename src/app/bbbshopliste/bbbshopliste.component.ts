@@ -115,26 +115,24 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
          warenkorb: this.warenkorb
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'success') {
-   
-        this.artikelService.resetcounter(0).subscribe({
-          next: (response) => {
-            console.log("Warenkorb zurückgesetzt")
-          },
-          error: (error) => {
-            console.error('Error', error);
-          }
-        });
-
+    dialogRef.componentInstance.checkout.subscribe(() => {
+      this.artikelService.resetcounter(0).subscribe({
+        next: (response) => {
+          console.log("Warenkorb zurückgesetzt")
+        },
+        error: (error) => {
+          console.error('Error', error);
+        }
+      });
+      
       this.artikelService.getartikel().subscribe(data => {
         console.log(this.artikel)
         this.artikel = data.map((item: any, index: number) => ({
           ...item,
           liste_index: index + 1
         }));
-        this.dataSource.data = this.artikel;
         this.warenkorb = [];
+        this.dataSource.data = this.artikel;
         this.artikel.forEach((item) => {
           if (item.anzahl > 0) {
             this.updateWarenkorb(item);
@@ -142,12 +140,10 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
         });
       });
       this.cdr.detectChanges();
-      } else if (result === undefined) {
-        console.log('Checkout dialog closed without confirmation.');
-      }
     });
-    
-  }
+    }
+
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
