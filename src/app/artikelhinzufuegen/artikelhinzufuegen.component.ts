@@ -75,8 +75,14 @@ export class ArtikelhinzufuegenComponent implements OnInit{
       // console.log('Kategorie:', kategorie);
       // console.log('Gebinde:', gebinde);
       // console.log('Second FormGroup:', this.secondFormGroup.value);
-
-      this.artikelService.insertArtikel(this.artikel.length + 1, 0, artikelName!, kategorie!, 0, gebinde!).subscribe({
+      console.log(this.kategorie)
+      const matchingCategory = this.kategorie.find(item => item.k_name === kategorie);
+      if (matchingCategory) {
+        console.log('Zutreffende Kategorie-ID:', matchingCategory.k_id);
+      } else {
+        console.log('Keine passende Kategorie gefunden.');
+      }
+      this.artikelService.insertArtikel(this.artikel.length + 1, 0, artikelName!, kategorie!, 0, gebinde!,matchingCategory.k_id).subscribe({
         next: (response) => {
           // console.log('Hinzufügen des Artikel erfolgreich', response);
           this.artikelHinzugefuegt.emit();

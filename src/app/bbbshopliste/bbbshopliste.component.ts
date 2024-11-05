@@ -115,34 +115,39 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
          warenkorb: this.warenkorb
       }
     });
+  
     dialogRef.componentInstance.checkout.subscribe(() => {
-      this.artikelService.resetcounter(0).subscribe({
-        next: (response) => {
-          console.log("Warenkorb zurückgesetzt")
-        },
-        error: (error) => {
-          console.error('Error', error);
+      this.warenkorb = []; // Setze den Warenkorb leer
+      this.dataSource.data = [...this.artikel]; // Erzwinge eine neue Referenz für die Tabelle
+      
+      this.artikel.forEach((item) => {
+        if (item.anzahl > 0) {
+          this.updateWarenkorb(item); // Aktualisiere den Warenkorb, falls notwendig
         }
       });
-      
-      this.artikelService.getartikel().subscribe(data => {
-        console.log(this.artikel)
-        this.artikel = data.map((item: any, index: number) => ({
-          ...item,
-          liste_index: index + 1
-        }));
-        this.warenkorb = [];
-        this.dataSource.data = this.artikel;
-        this.artikel.forEach((item) => {
-          if (item.anzahl > 0) {
-            this.updateWarenkorb(item);
-          }
-        });
-      });
-      this.cdr.detectChanges();
+  
+      this.cdr.detectChanges(); // Detektiere Änderungen explizit
     });
-    }
-
+  
+    this.artikelService.resetcounter(0).subscribe({
+      next: (response) => {
+        console.log("Warenkorb zurückgesetzt");
+      },
+      error: (error) => {
+        console.error('Error', error);
+      }
+    });
+    
+    this.artikelService.getartikel().subscribe(data => {
+      this.artikel = data.map((item: any, index: number) => ({
+        ...item,
+        liste_index: index + 1
+      }));
+      this.dataSource.data = [...this.artikel]; // Erzwinge eine neue Referenz für die Tabelle
+      this.dataSource.data = this.artikel; // Aktualisiere die Datenquelle
+      this.cdr.detectChanges(); // Nochmals sicherstellen, dass Änderungen übernommen werden
+    });
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

@@ -84,23 +84,32 @@ export class CheckoutComponent implements OnInit {
   }
   
   generateRandomNumber(): number {
-    // Generate a random number between 100000 and 999999
     const randomNumber = Math.floor(Math.random() * 900000) + 100000;
     return randomNumber;
   }
   openWarenkorb() {
     const dialogRef = this.dialog.open(WarenkorbfensterComponent, {
       data: {
-        // Optionale Daten für den Dialog
       }
     });
   
     dialogRef.componentInstance.warenkorbHinzugefuegt.subscribe((warenkorb: string) => {
       console.log(warenkorb)
-      // Hier kannst du den Wert `warenkorb` weiterverarbeiten oder speichern
       this.checkout.emit();
+      const genereated_id = this.generateRandomNumber() 
       this.generatePDF(warenkorb);
+      this.warenkorb.forEach((item, index) => {
+        console.log(`Item ${index + 1}:`, item.anzahl);
+       this.artikelService.insertWarenkorb(genereated_id,item.a_nr,item.r_nr,item.artikel,item.kategorie,item.anzahl,item.gebinde).subscribe({
+         next: (response) => {
+           // console.log('Hinzufügen des Artikel erfolgreich', response);
 
+           },
+           error: (error) => {
+             // console.error('Fehler beim erstellen des Artikel', error);
+           }
+         });
+    });
     });
   }
   
@@ -146,7 +155,6 @@ export class CheckoutComponent implements OnInit {
         }
       }
     };
-    const genereated_id = this.generateRandomNumber() 
     // console.log(genereated_id)
     pdfMake.createPdf(documentDefinition).download(warenkorbname+".pdf");
   }

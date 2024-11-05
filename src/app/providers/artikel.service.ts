@@ -10,9 +10,14 @@ export class ArtikelService {
   kategorie: Array<any> = [];
   constructor(private http: HttpClient) { }
 
-  public insertArtikel(a_nr:number,r_nr:number,artikel:string,kategorie:string,anzahl:number,gebinde:string): Observable<any> {
+  public insertArtikel(a_nr:number,r_nr:number,artikel:string,kategorie:string,anzahl:number,gebinde:string,k_id:number): Observable<any> {
     //console.log(ticket_nr,kunden_id,veranstaltungs_nr,erwachsene,ermaessigte,kinder)
-     return this.http.post<any>('http://127.0.0.1:8080/insertartikel', {a_nr,r_nr,artikel,kategorie,anzahl,gebinde});
+     return this.http.post<any>('http://127.0.0.1:8080/insertartikel', {a_nr,r_nr,artikel,kategorie,anzahl,gebinde,k_id});
+   }
+
+  public insertWarenkorb(id:number,a_nr:number,r_nr:number,artikel:string,kategorie:string,anzahl:number,gebinde:string): Observable<any> {
+    //console.log(ticket_nr,kunden_id,veranstaltungs_nr,erwachsene,ermaessigte,kinder)
+     return this.http.post<any>('http://127.0.0.1:8080/insertWarenkorb', {id,a_nr,r_nr,artikel,kategorie,anzahl,gebinde});
    }
   public insertKategorie(k_id:number,k_name:string): Observable<any> {
     //console.log(ticket_nr,kunden_id,veranstaltungs_nr,erwachsene,ermaessigte,kinder)
