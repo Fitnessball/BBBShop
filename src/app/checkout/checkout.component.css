@@ -1,0 +1,17 @@
+.login-container mat-form-field + mat-form-field {
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* .login-right-align {
+  } */
+  
+  input.login-right-align::-webkit-outer-spin-button,
+  input.login-right-align::-webkit-inner-spin-button {
+    display: none;
+    -webkit-appearance: none;
+  }
+  
