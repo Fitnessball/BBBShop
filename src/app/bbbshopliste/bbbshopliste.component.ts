@@ -117,37 +117,27 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
     });
   
     dialogRef.componentInstance.checkout.subscribe(() => {
-      this.warenkorb = []; // Setze den Warenkorb leer
-      this.dataSource.data = [...this.artikel]; // Erzwinge eine neue Referenz für die Tabelle
+      this.warenkorb = []; // Warenkorb leeren
       
-      this.artikel.forEach((item) => {
-        if (item.anzahl > 0) {
-          this.updateWarenkorb(item); // Aktualisiere den Warenkorb, falls notwendig
+      // Zurücksetzen der Artikelanzahl im Array
+      this.artikel = this.artikel.map(item => ({ ...item, anzahl: 0 }));
+    
+      // Artikel Service aufrufen, um auch Backend anzupassen
+      this.artikelService.resetcounter(0).subscribe({
+        next: () => {
+          console.log("Warenkorb zurückgesetzt");
+        },
+        error: (error) => {
+          console.error('Error', error);
         }
       });
-  
-      this.cdr.detectChanges(); // Detektiere Änderungen explizit
-    });
-  
-    this.artikelService.resetcounter(0).subscribe({
-      next: (response) => {
-        console.log("Warenkorb zurückgesetzt");
-      },
-      error: (error) => {
-        console.error('Error', error);
-      }
-    });
     
-    this.artikelService.getartikel().subscribe(data => {
-      this.artikel = data.map((item: any, index: number) => ({
-        ...item,
-        liste_index: index + 1
-      }));
-      this.dataSource.data = [...this.artikel]; // Erzwinge eine neue Referenz für die Tabelle
-      this.dataSource.data = this.artikel; // Aktualisiere die Datenquelle
-      this.cdr.detectChanges(); // Nochmals sicherstellen, dass Änderungen übernommen werden
+      // Datenquelle und Change Detection aktualisieren
+      this.dataSource.data = [...this.artikel]; // Force-Update der Datenquelle
+      this.cdr.markForCheck();
+      this.cdr.detectChanges();
     });
-  }
+  }    
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

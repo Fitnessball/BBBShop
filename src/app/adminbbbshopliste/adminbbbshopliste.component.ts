@@ -26,6 +26,7 @@ import { ArtikelentfernenComponent } from '../artikelentfernen/artikelentfernen.
 import { KategorieentfernenComponent } from '../kategorieentfernen/kategorieentfernen.component';
 import { KategorieHinzufuegenComponent } from '../kategorie-hinzufuegen/kategorie-hinzufuegen.component';
 import { WarenkorbentfernenComponent } from '../warenkorbentfernen/warenkorbentfernen.component';
+import pdfMake from 'pdfmake/build/pdfmake';
 
 @Component({
   selector: 'app-adminbbbshopliste',
@@ -369,5 +370,50 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage(); 
     }
+  }
+  generatePDF(warenkorbname: string,targetId:number) {
+    const filterarray = this.warenkorbbackup.filter(item => item.id === targetId);
+    const sortedWarenkorb = filterarray.sort((a, b) => (a.r_nr || 0) - (b.r_nr || 0));
+    const documentDefinition = {
+      content: [
+        { text: 'Warenkorb Details', style: 'header' },
+        {
+          style: 'tableExample',
+          table: {
+            headerRows: 1, // Specify that there is one header row
+            body: [
+              // Header Row
+              [
+                { text: 'Nr', bold: true },
+                { text: 'Regal Nr.', bold: true },
+                { text: 'Artikel', bold: true },
+                { text: 'Kategorie', bold: true },
+                { text: 'Anzahl', bold: true },
+                { text: 'Gebinde', bold: true },
+              ],
+              // Data Rows
+              ...sortedWarenkorb.map(item => [
+                item.a_nr || '0',  // Fallback if `name` is missing
+                item.r_nr || '0',  // Fallback if `name` is missing
+                item.artikel || 'nd',       // Fallback if `quantity` is missing
+                item.kategorie || 'nd',       // Fallback if `quantity` is missing
+                item.anzahl || 'nd',       // Fallback if `quantity` is missing
+                item.gebinde || 'nd',       // Fallback if `quantity` is missing
+              ])
+            ]
+          }
+        }
+      ],
+      styles: {
+        header: {
+          fontSize: 18,
+          bold: true,
+        },
+        tableExample: {
+        }
+      }
+    };
+    // console.log(genereated_id)
+    pdfMake.createPdf(documentDefinition).download(warenkorbname+".pdf");
   }
 }

@@ -170,7 +170,12 @@
               <span class="warenkorb_span" matListItemTitle>{{ item.warenkorbbezeichner }}
               <button mat-fab aria-label="Warenkorb löschen" (click)="openDeleteWarenkorb(item.id)">
               <mat-icon>delete</mat-icon>
-            </button></span>
+            </button>
+            <button mat-fab aria-label="Warenkorb löschen" (click)="generatePDF(item.warenkorbbezeichner,item.id)">
+              <mat-icon>download</mat-icon>
+            </button>
+          
+          </span>
           </ng-container>
             }
         </ng-template>
@@ -188,7 +193,7 @@
           </div>
           <ng-template #savebutton>
             <div class="example-button-row">
-              <button (click)="editMode()" mat-raised-button>Speichern</button>
+              <button (click)="editMode()" mat-raised-button>Bearbeiten beenden</button>
             </div>
           </ng-template>
         </section>
