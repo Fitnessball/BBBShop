@@ -42,6 +42,7 @@ import { DatePipe } from '@angular/common';
     MatIconModule,
     CommonModule 
   ],
+  host:{},
   providers: [DatePipe],
   templateUrl: './bbbshopliste.component.html',
   styleUrls: ['./bbbshopliste.component.css']
