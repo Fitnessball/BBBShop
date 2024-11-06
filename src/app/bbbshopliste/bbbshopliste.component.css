@@ -1,3 +1,11 @@
+/* global styles.css */
+  .mat-horizontal-content-container.ng-tns-c3820311392-41{
+    height:300px
+  }
+  .mat-mdc-raised-button .mat-mdc-button-touch-target{
+    width: 100%;
+    color: brown;
+  }
 body {
     overflow: hidden;
     height:auto;
