@@ -24,9 +24,9 @@ app.use(allowCrossDomain);
 
 // configuration =================
 app.use(express.static(path.join(__dirname, '/dist/BBBShop/browser'))); // TODO rename to your app-name
-
+const PORT = 8080
 // listen (start app with node server.js) ======================================
-var server = app.listen(8080, function () {
+var server = app.listen(PORT, function () {
     console.log("App listening on port 8080");
 });
 
