@@ -129,7 +129,7 @@ function executeQueryWithRetry(query, retries = 3) {
     });
 }
 
-app.get('https://bbbshop.onrender.com:8080/loadartikel', async function (req, res) {
+app.get('/loadartikel', async function (req, res) {
     const query = "SELECT * FROM artikelliste ORDER BY artikel";
     try {
         const results = await executeQueryWithRetry(query);
