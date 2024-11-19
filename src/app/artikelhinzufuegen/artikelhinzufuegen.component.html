@@ -1,8 +1,8 @@
-<mat-stepper [linear]="isLinear" #stepper >
+<mat-stepper [linear]="isLinear" orientation="vertical" #stepper >
     <mat-step [stepControl]="firstFormGroup" >
       <form [formGroup]="firstFormGroup">
         <ng-template matStepLabel>Name des Artikels</ng-template>
-        <mat-form-field appearance="outline">
+        <mat-form-field >
           <mat-label>Artikel</mat-label>
           <input matInput placeholder="Artikel" formControlName="firstCtrl" required>
         </mat-form-field>
@@ -15,7 +15,7 @@
     <mat-step [stepControl]="secondFormGroup">
         <form [formGroup]="secondFormGroup">
           <ng-template matStepLabel>Kategorie des Artikels</ng-template>
-          <mat-form-field appearance="outline" class="example-full-width">
+          <mat-form-field  class="example-full-width">
             <mat-label>Kategorie</mat-label>
             <mat-select
             placeholder="Wähle aus"
@@ -38,7 +38,7 @@
       <mat-step [stepControl]="thirdFormGroup">
         <form [formGroup]="thirdFormGroup">
           <ng-template matStepLabel>Gebinde des Artikels</ng-template>
-          <mat-form-field appearance="outline">
+          <mat-form-field >
             <mat-label>Gebinde</mat-label>
             <input matInput placeholder="Gebinde" formControlName="thirdCtrl" required>
           </mat-form-field>
@@ -47,4 +47,4 @@
           </div>
         </form>
       </mat-step>
-</mat-stepper>
+</mat-stepper> 

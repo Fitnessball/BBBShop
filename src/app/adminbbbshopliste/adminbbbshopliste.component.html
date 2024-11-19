@@ -15,11 +15,13 @@
       <ng-template #editTemplate>
         @for (tag of kategorie; track tag) {
         <ng-container>
+          <div class="taglist">
           <input matInput [(ngModel)]="tag.k_name" (ngModelChange)="onTagChange(tag, 'tag_name', $event)" />
           <button *ngIf="tag.k_id && tag.k_id !== 1" mat-fab aria-label="Kategorie löschen"
             (click)="openDeleteKategorie(tag.k_id)">
             <mat-icon>delete</mat-icon>
           </button>
+        </div>
         </ng-container>
         }
       </ng-template>
@@ -167,14 +169,15 @@
         <ng-template #editWarenkorb>
           @for (item of warenkorbbezeichner; track item) {
             <ng-container>
-              <span class="warenkorb_span" matListItemTitle>{{ item.warenkorbbezeichner }}
+              <div class="flexwarenkorb">
+              <span class="warenkorb_span" matListItemTitle>{{ item.warenkorbbezeichner }}</span>
               <button mat-fab aria-label="Warenkorb löschen" (click)="openDeleteWarenkorb(item.id)">
               <mat-icon>delete</mat-icon>
             </button>
             <button mat-fab aria-label="Warenkorb löschen" (click)="generatePDF(item.warenkorbbezeichner,item.id)">
               <mat-icon>download</mat-icon>
             </button>
-          </span>
+          </div>
           
           </ng-container>
             }

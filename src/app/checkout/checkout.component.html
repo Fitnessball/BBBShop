@@ -1,11 +1,15 @@
 
    <div class="login-container">
-    <form [formGroup]="firstFormGroup">
-      <mat-form-field>
+    
+    <form  [formGroup]="firstFormGroup">
+      <mat-form-field class="benutzer-container">
         <mat-label>Benutzer</mat-label>
         <input formControlName="firstCtrl" matInput>
       </mat-form-field>
-      <mat-form-field>
+
+
+
+      <mat-form-field class="passwort-container">
         <mat-label>Passwort</mat-label>
         <input formControlName="secondCtrl" matInput [type]="hide() ? 'password' : 'text'" />
         <button
@@ -18,8 +22,9 @@
           <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
       </mat-form-field>
+
       <form (ngSubmit)="userLogin()">
-        <button mat-raised-button type="submit">Einloggen</button>
+        <button class="button-style" mat-raised-button type="submit">Einloggen</button>
       </form>
     </form>
     

@@ -4,7 +4,20 @@
     justify-content: center;
     flex-direction: row;
 }
-
+.right-container {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 20%;
+}
+.middle-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    height: 100%;
+    width: 65%;
+}
 .left-container {
     display: flex;
     flex-direction: column;
@@ -15,14 +28,34 @@
 
 
 
-.middle-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    flex-direction: column;
-    height: 100%;
-    width: 65%;
+
+.mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
 }
+.mat-mdc-fab-base {
+    height: 32px;
+    width: 32px;
+    margin: 4px;
+    box-shadow: none;
+}
+.mat-mdc-fab-base:hover {
+    height: 32px;
+    width: 32px;
+    margin-left: 4px;
+    margin-top: 5px;
+    box-shadow: none;
+}
+.mat-icon {
+    color: black;
+}
+
+
+
+
+
+
+
 
 .main-table-container {
     position: relative;
@@ -48,10 +81,6 @@ th {
 
 
 
-.mat-mdc-form-field {
-    font-size: 14px;
-    width: 100%;
-}
 
 td,
 th {
@@ -74,19 +103,14 @@ th {
     width: 100%;
 }
 
-.right-container {
-    display: flex;
-    justify-content: center;
-    height: 100%;
-    width: 20%;
-}
+
 
 .list-container {
     display: flex;
-    /* justify-content: center; */
+    /* justify-content: center;4 */
     align-items: flex-start;
     flex-direction: column;
-    
+    justify-content: flex-start;
     padding: 5%;
     margin: 2%;
     padding-top: 0%;
@@ -97,7 +121,19 @@ th {
     overflow-y: auto;
     overflow-x: hidden;
 }
+.flexwarenkorb{
+    display: flex;
+    align-items:center;
+    flex-direction: row;
+    padding-bottom: 2%;
+    padding-top: 2%;
+
+}
+
 .tag-container {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
     padding: 7%;
     padding-top: 0%;
     position: relative;
@@ -106,6 +142,14 @@ th {
     overflow-y: auto;
     overflow-x: hidden;
 }
+.taglist{
+    display: flex;
+    align-items:center;
+    flex-direction: row;
+    padding-bottom: 2%;
+    padding-top: 2%;
+}
+
 .warenkorb_span {
     width: 100%;
 }

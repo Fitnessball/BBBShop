@@ -93,7 +93,7 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
   }
 
   openArtikel() {
-    const dialogRef = this.dialog.open(ArtikelhinzufuegenComponent, {
+    const dialogRef = this.dialog.open(ArtikelhinzufuegenComponent, {panelClass: 'my-artikel-erstellen',
       data: {
         kategorie: this.kategorie,
         artikel: this.artikel
@@ -111,7 +111,7 @@ export class BbbshoplisteComponent implements AfterViewInit, OnInit {
     });
   }
   openCheckout(){
-    const dialogRef = this.dialog.open(CheckoutComponent, {
+    const dialogRef = this.dialog.open(CheckoutComponent, {panelClass: 'my-outlined-dialog',
       data: {
          warenkorb: this.warenkorb
       }

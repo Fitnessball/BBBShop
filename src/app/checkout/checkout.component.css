@@ -1,17 +1,26 @@
 .login-container mat-form-field + mat-form-field {
-    width: auto;
-    height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
   }
   
-  /* .login-right-align {
-  } */
-  
+  .benutzer-container{
+    padding-left: 4%;
+    padding-top: 4%;
+    width: 70%;
+}
+  .passwort-container{
+    padding-left: 4%;
+    padding-top: 4%;
+    width: 80%;
+
+  }
+  .button-style{
+    margin-left: 4%;
+  }
+
   input.login-right-align::-webkit-outer-spin-button,
   input.login-right-align::-webkit-inner-spin-button {
     display: none;
     -webkit-appearance: none;
   }
-  

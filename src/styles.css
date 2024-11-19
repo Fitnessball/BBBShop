@@ -18,3 +18,10 @@ body {
     font-weight: 300; /* Roboto Light */
     min-height: 100vh; /* Ensure body is at least 100% of viewport height */
 }
+.my-outlined-dialog{
+    height: 230px;
+    width: 250px;
+}
+.my-artikel-erstellen{
+    width: 120px;
+}
