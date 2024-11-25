@@ -130,6 +130,9 @@ th {
 
 }
 
+td[_ngcontent-ng-c1688912352], th[_ngcontent-ng-c1688912352]{
+    padding: 0px;
+}
 .tag-container {
     display: flex;
     align-items: flex-start;

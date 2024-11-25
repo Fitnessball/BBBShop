@@ -18,7 +18,9 @@ body {
     justify-content: center;
     
 }
-
+td[_ngcontent-ng-c1688912352], th[_ngcontent-ng-c1688912352]{
+    padding: 0px;
+}
 .left-container {
     display: flex;
     flex-direction: column;
