@@ -11,7 +11,7 @@
       </mat-chip-listbox>      
       </div>
         <section>
-        <div class="example-button-row">
+        <div class="action-button-container">
           <button  mat-raised-button (click)="openArtikel()">Artikel erstellen</button>
         </div>
       </section>
@@ -90,7 +90,7 @@
       </mat-list>      
     </div>
     <section>
-      <div class="example-button-row">
+      <div class="action-button-container">
         <button *ngIf="warenkorb.length > 0"  mat-raised-button (click)="openCheckout()">Checkout</button>
       </div>
     </section>

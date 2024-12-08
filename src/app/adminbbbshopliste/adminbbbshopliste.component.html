@@ -30,12 +30,12 @@
 
 
     <section>
-      <div class="example-button-row">
+      <div class="action-button-container">
         <button mat-raised-button (click)="openArtikel()">Artikel erstellen</button>
       </div>
     </section>
     <section>
-      <div class="example-button-row">
+      <div class="action-button-container">
         <button mat-raised-button (click)="openKategorie()">Kategorie erstellen</button>
       </div>
     </section>
@@ -157,7 +157,7 @@
   <div class="right-container">
     <div>
  
-      <h3 class="heading_L_R">Warenkorb</h3>
+      <h3 class="heading_L_R">Warenkorbverzeichnis</h3>
       <div class="list-container">
         <mat-list *ngIf="!editModeActive; else editWarenkorb">
           @for (item of warenkorbbezeichner; track item) {
@@ -197,11 +197,11 @@
 
       <div class="edit-button-container">
         <section>
-          <div class="example-button-row" *ngIf="!editModeActive; else savebutton">
+          <div class="action-button-container" *ngIf="!editModeActive; else savebutton">
             <button (click)="editMode()" mat-raised-button>Bearbeiten</button>
           </div>
           <ng-template #savebutton>
-            <div class="example-button-row">
+            <div class="action-button-container">
               <button (click)="editMode()" mat-raised-button>Bearbeiten beenden</button>
             </div>
           </ng-template>

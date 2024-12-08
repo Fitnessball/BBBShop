@@ -5,8 +5,6 @@
     flex-direction: row;
 }
 .right-container {
-    display: flex;
-    justify-content: center;
     height: 100%;
     width: 20%;
 }
@@ -152,7 +150,9 @@ td[_ngcontent-ng-c1688912352], th[_ngcontent-ng-c1688912352]{
     padding-bottom: 2%;
     padding-top: 2%;
 }
-
+.action-button-container{
+    margin: 5%;
+}
 .warenkorb_span {
     width: 100%;
 }

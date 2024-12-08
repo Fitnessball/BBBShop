@@ -43,7 +43,7 @@ export class KategorieHinzufuegenComponent implements OnInit {
   }
 
   firstFormGroup = this._formBuilder.group({
-    firstCtrl: ['', [Validators.required, Validators.pattern('^.{3,}$')]]
+    firstCtrl: ['', [Validators.required, Validators.pattern('^.{3,}$'), Validators.maxLength(20)]]
   });
   
 
