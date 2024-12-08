@@ -25,3 +25,8 @@ body {
 .my-artikel-erstellen{
     width: 120px;
 }
+.my-delete-dialog{
+    width: 340px;
+    height: 170px;
+    border-radius: 0px;
+}

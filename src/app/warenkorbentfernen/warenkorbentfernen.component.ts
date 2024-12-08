@@ -1,11 +1,12 @@
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ArtikelService } from '../providers/artikel.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-warenkorbentfernen',
   standalone: true,
-  imports: [],
+  imports: [MatButtonModule],
   templateUrl: './warenkorbentfernen.component.html',
   styleUrl: './warenkorbentfernen.component.css'
 })

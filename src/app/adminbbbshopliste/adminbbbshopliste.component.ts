@@ -120,7 +120,7 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
   
   
   openArtikel() {
-    const dialogRef = this.dialog.open(ArtikelhinzufuegenComponent, {
+    const dialogRef = this.dialog.open(ArtikelhinzufuegenComponent, {panelClass: 'my-artikel-erstellen',
       data: {
         kategorie: this.kategorie,
         artikel: this.artikel
@@ -199,7 +199,7 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
   }
   openDeleteWarenkorb(id: number){
     console.log(id)
-    const dialogRef = this.dialog.open(WarenkorbentfernenComponent, {
+    const dialogRef = this.dialog.open(WarenkorbentfernenComponent, {panelClass: 'my-delete-dialog',
       data: {
         id: id
       }
@@ -214,7 +214,7 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
     });
   }
   openCheckout(){
-    const dialogRef = this.dialog.open(CheckoutComponent, {
+    const dialogRef = this.dialog.open(CheckoutComponent, {panelClass: 'my-outlined-dialog',
       data: {
          warenkorb: this.warenkorb
       }

@@ -161,10 +161,16 @@
       <div class="list-container">
         <mat-list *ngIf="!editModeActive; else editWarenkorb">
           @for (item of warenkorbbezeichner; track item) {
-          <mat-list-item>
-            <span matListItemTitle>{{ item.warenkorbbezeichner }}</span>
-          </mat-list-item>
-          }
+            <ng-container>
+              <div class="flexwarenkorb">
+              <span class="warenkorb_span" matListItemTitle>{{ item.warenkorbbezeichner }}</span>
+            <button mat-fab aria-label="Warenkorb löschen" (click)="generatePDF(item.warenkorbbezeichner,item.id)">
+              <mat-icon>download</mat-icon>
+            </button>
+          </div>
+          
+          </ng-container>
+            }
         </mat-list>
         <ng-template #editWarenkorb>
           @for (item of warenkorbbezeichner; track item) {

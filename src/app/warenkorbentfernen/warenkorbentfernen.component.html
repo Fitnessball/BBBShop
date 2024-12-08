@@ -1,11 +1,15 @@
-<p>Soll der Warenkorb gelöscht werden ?</p>
-<section>
-    <div>
-      <button  mat-raised-button (click)="deleteWarenkorb()">Warenkorb löschen</button>
-    </div>
-  </section>
-  <section>
-    <div>
-      <button  mat-raised-button (click)="abbrechen()" >Abbrechen</button>
-    </div>
-  </section>
+<div class="delete-container">
+  <p>Soll der Warenkorb gelöscht werden ?</p>
+  <div class="button-container">
+    <section>
+      <div>
+        <button mat-raised-button (click)="abbrechen()">Abbrechen</button>
+      </div>
+    </section>
+    <section>
+      <div>
+        <button mat-raised-button (click)="deleteWarenkorb()">Warenkorb löschen</button>
+      </div>
+    </section>
+  </div>
+</div>
