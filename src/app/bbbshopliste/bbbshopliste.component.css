@@ -149,3 +149,10 @@ input[type="number"]::-webkit-outer-spin-button {
   td[_ngcontent-ng-c1688912352], th[_ngcontent-ng-c1688912352]{
     padding: 0px;
 }
+
+td[_ngcontent-ng-c353963987], th[_ngcontent-ng-c353963987] {
+    padding: 0px 0px 0px 15px;
+    height: 100px;
+    text-align: left;
+    white-space: nowrap;
+}

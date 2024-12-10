@@ -47,7 +47,10 @@ export class KategorieHinzufuegenComponent implements OnInit {
   });
   
 
-  
+  generateRandomNumber(): number {
+    const randomNumber = Math.floor(Math.random() * 900000) + 100000;
+    return randomNumber;
+  }
 
   isLinear = true;
 
@@ -57,8 +60,8 @@ export class KategorieHinzufuegenComponent implements OnInit {
     console.log(kategorie)
 
     if (this.firstFormGroup.valid) {
-
-      this.artikelService.insertKategorie(this.kategorie.length + 1,kategorie!).subscribe({
+      const genereated_id = this.generateRandomNumber() 
+      this.artikelService.insertKategorie(genereated_id,kategorie!).subscribe({
         next: (response) => {
           // console.log('Hinzufügen des Artikel erfolgreich', response);
           this.kategorieHinzugefuegt.emit();
