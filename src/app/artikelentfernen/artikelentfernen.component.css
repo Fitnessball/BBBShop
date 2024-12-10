@@ -1,0 +1,11 @@
+.delete-container {
+    padding: 5%;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+}
+

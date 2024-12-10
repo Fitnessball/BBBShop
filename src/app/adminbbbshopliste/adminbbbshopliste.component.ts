@@ -159,7 +159,7 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
 
   openDelete(index: number){
     console.log(index);
-    const dialogRef = this.dialog.open(ArtikelentfernenComponent, {
+    const dialogRef = this.dialog.open(ArtikelentfernenComponent, {panelClass: 'my-delete-dialog',
       data: {
         index: index
       }
@@ -176,7 +176,7 @@ export class AdminbbbshoplisteComponent implements AfterViewInit, OnInit {
   }
 
   openDeleteKategorie(index: number){
-    const dialogRef = this.dialog.open(KategorieentfernenComponent, {
+    const dialogRef = this.dialog.open(KategorieentfernenComponent, {panelClass: 'my-delete-dialog',
       data: {
         index: index
       }
