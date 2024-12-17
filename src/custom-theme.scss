@@ -10,11 +10,11 @@
 @include mat.core();
 
 // Define the theme object.
-$auto-kino-theme: mat.define-theme((
+$bbbshop-theme: mat.define-theme((
   color: (
     theme-type: light,
-    primary: mat.$azure-palette,
-    tertiary: mat.$blue-palette,
+    primary: mat.$green-palette,
+    tertiary: mat.$violet-palette,
   ),
   density: (
     scale: 0,
@@ -25,7 +25,7 @@ $auto-kino-theme: mat.define-theme((
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 :root {
-  @include mat.all-component-themes($auto-kino-theme);
+  @include mat.all-component-themes($bbbshop-theme);
 }
 
 // Comment out the line below if you want to use the pre-defined typography utility classes.
